@@ -1,0 +1,11 @@
+<#if licenseFirst??>
+${licenseFirst}
+</#if>
+${licensePrefix}Sistemas distribuidos - Practica Hotel
+${licensePrefix}Universidad Rey Juan Carlos, Mostoles
+${licensePrefix}Realizada por Julio Lopez González y Manuel Gómez Pérez
+${licensePrefix}Doble Grado GII + ADE
+${licensePrefix}https://github.com/giiade/hotel-distribuido
+<#if licenseLast??>
+${licenseLast}
+</#if>

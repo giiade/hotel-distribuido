@@ -1,9 +1,9 @@
-/**
+/*
  * Sistemas distribuidos - Practica Hotel
  * Universidad Rey Juan Carlos, Mostoles
- * @author Julio Lopez González
- * @author Manuel Gómez Pérez
- * @see https://github.com/giiade/hotel-distribuido
+ * Realizada por Julio Lopez González y Manuel Gómez Pérez
+ * Doble Grado GII + ADE
+ * https://github.com/giiade/hotel-distribuido
  */
 package Helper;
 
