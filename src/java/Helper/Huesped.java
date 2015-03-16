@@ -7,9 +7,12 @@
  */
 package Helper;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Esta clase es la que representa el objeto Huesped que estará formado por lo 
@@ -24,6 +27,10 @@ import java.util.HashMap;
  */
 public class Huesped {
     
+    final private String LOG = this.getClass().getSimpleName();
+
+    
+    
     //CONSTANTES --> Luego se meterán en una clase de constantes.
     final static String DIR_KEY = "direccion";
     final static String LOC_KEY = "localidad";
@@ -35,12 +42,39 @@ public class Huesped {
     private String apellidos;
     private String nif;
     private Date nacimiento;
-    ArrayList<HashMap<String,String>> domicilio;
+    HashMap<String,String> domicilio;
     
     //Opcionales
     private String fijo;
     private String movil;
     private String correo;
+
+    public Huesped(String nombre, String apellidos, String nif, Date nacimiento, String direccion, String cp, String localidad,
+            String municipio, String fijo, String movil, String correo) {
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.nif = nif;
+        this.nacimiento = nacimiento;
+        this.setDomicilio(direccion, cp, localidad, municipio);
+        this.fijo = fijo;
+        this.movil = movil;
+        this.correo = correo;
+    }
+    
+    
+    
+    public Huesped() {
+        this.nombre = "José";
+        this.apellidos = "Perez Perez";
+        this.nif = "12345678A";
+        try {
+            this.nacimiento=Const.DATE_FORMAT.parse("15/01/1990");
+        } catch (ParseException ex) {
+           Logger.getLogger(LOG).log(Level.SEVERE, "Error parseando Constructor Vacio \n{0}", ex.getMessage());
+        }
+        this.movil = "673214356";
+        this.setDomicilio("Rio Manzano", "27890", "Pozuelo", "Madrid");
+    }
 
     /**
      * @return nombre
@@ -140,21 +174,44 @@ public class Huesped {
         this.correo = correo;
     }
     
-    public void setDomicilio(String direccion, String cp, String municipio, String localidad){
+    /**
+     * Guarda la dirección
+     * @param direccion 
+     * @param cp
+     * @param municipio
+     * @param localidad 
+     */
+    private void setDomicilio(String direccion, String cp, String municipio, String localidad){
         HashMap<String,String> hashmap = new HashMap<>();
         hashmap.put(DIR_KEY, direccion);
-        domicilio.add(hashmap);
         hashmap.put(CP_KEY, cp);
-        domicilio.add(hashmap);
         hashmap.put(MUN_KEY, municipio);
-        domicilio.add(hashmap);
         hashmap.put(LOC_KEY, localidad);
-        domicilio.add(hashmap);
+        domicilio = hashmap;
     }
     
-    public ArrayList<HashMap<String,String>> getDomicilio(){
+    public HashMap<String,String> getDomicilio(){
         return domicilio;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder resultado = new StringBuilder();
+        String coma = ", ";
+        resultado.append(this.nombre).append(coma);
+        resultado.append(this.apellidos).append(coma);
+        if(!domicilio.isEmpty()){
+            resultado.append(this.domicilio.get("direccion"));
+        }else{
+            resultado.append("No hay domicilio registrado");
+        }
+        
+        return resultado.toString();
+        
+        
+    }
+    
+    
     
     
     
