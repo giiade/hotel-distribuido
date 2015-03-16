@@ -16,6 +16,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -49,6 +50,11 @@ public class ServidorHotel extends HttpServlet {
         huespedes.add(huesped);
         reservas.add(reserva);
         reservasCliente.put(reserva.getNIF(), reservas);
+        
+        //Obtenemos la dirección relativa para guardar un archivo persistente de 
+        //datos.
+        ServletContext sc = getServletContext();
+        String Hola = sc.getRealPath("files");
 
     }
 
