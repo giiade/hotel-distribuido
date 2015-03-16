@@ -13,40 +13,46 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *Contendra  el objeto Reserva y sus metodos.
- * Contenido:
- * Huesped
- * Habitacion
- * Fecha de entrada
- * Fecha de salidad
+ * Contendra el objeto Reserva y sus metodos. Contenido: Huesped Habitacion
+ * Fecha de entrada Fecha de salidad
  */
 public class Reserva {
-    
+
     private final String LOG = getClass().getCanonicalName();
-    
+
     private String NIF;
     private int habitacionId;
     private Date fEntrada;
     private Date fSalida;
-    
-    
-     /**
-     * Constructor de clase
-     * Inicializa automaticamente el huesped a uno por defecto.
+
+    /**
+     * Constructor de clase Inicializa automaticamente el huesped a uno por
+     * defecto.
      */
-    public Reserva(){
-        this.NIF="12345678A";
-        this.habitacionId=101;
+    public Reserva() {
+        this.NIF = "12345678A";
+        this.habitacionId = 101;
         try {
-            this.fEntrada = Const.DATE_FORMAT.parse("1/03/2015");
-            this.fSalida = Const.DATE_FORMAT.parse("2/03/2015");
+            this.fEntrada = Constantes.DATE_FORMAT.parse("1/03/2015");
+            this.fSalida = Constantes.DATE_FORMAT.parse("2/03/2015");
         } catch (ParseException ex) {
             Logger.getLogger(LOG).log(Level.SEVERE, "Error parseando Constructor Vacio \n{0}", ex.getMessage());
         }
- }
+    }
+
+    public Reserva(String NIF, int habitacionId, String fEntrada, String fSalida) {
+        this.NIF = NIF;
+        this.habitacionId = habitacionId;
+        try {
+            this.fEntrada = Constantes.DATE_FORMAT.parse(fEntrada);
+            this.fSalida = Constantes.DATE_FORMAT.parse(fSalida);
+        } catch (ParseException ex) {
+            Logger.getLogger(LOG).log(Level.SEVERE, "Error parseando Constructor Vacio \n{0}", ex.getMessage());
+        }
+    }
 
     /**
-     * @return  NIF
+     * @return NIF
      */
     public String getNIF() {
         return NIF;
@@ -100,5 +106,5 @@ public class Reserva {
     public void setfSalida(Date fSalida) {
         this.fSalida = fSalida;
     }
-    
+
 }
