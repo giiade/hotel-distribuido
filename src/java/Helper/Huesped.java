@@ -7,6 +7,8 @@
  */
 package Helper;
 
+import com.thoughtworks.xstream.annotations.XStreamImplicit;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -23,7 +25,8 @@ import java.util.logging.Logger;
  *
  */
 public class Huesped {
-
+    
+    @XStreamOmitField
     final private String LOG = this.getClass().getSimpleName();
 
     //CONSTANTES --> Luego se meterán en una clase de constantes.
@@ -37,6 +40,7 @@ public class Huesped {
     private String apellidos;
     private String nif;
     private Date nacimiento;
+//    @XStreamImplicit(keyFieldName = "dirección", itemFieldName = "dirección")
     HashMap<String, String> domicilio;
 
     //Opcionales
@@ -60,14 +64,19 @@ public class Huesped {
         this.correo = correo;
     }
 
-    public Huesped(String nombre, String apellidos, String nif) {
+    public Huesped(String nombre, String apellidos, String nif, String nacimiento) {
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.nif = nif;
+        try {
+            this.nacimiento = Constantes.DATE_FORMAT.parse(nacimiento);
+        } catch (ParseException ex) {
+            Logger.getLogger(Huesped.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public Huesped() {
-        this.nombre = "José";
+        this.nombre = "Jose";
         this.apellidos = "Perez Perez";
         this.nif = "12345678A";
         try {

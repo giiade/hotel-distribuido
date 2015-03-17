@@ -58,9 +58,11 @@ public class ServidorHotel extends HttpServlet {
         huespedes.add(huesped);
         reservas.add(reserva);
         reservasCliente.put(reserva.getNIF(), reservas);
-        
+
         xstream.alias("huesped", Huesped.class);
         xstream.alias("reserva", Reserva.class);
+        xstream.alias("Respuesta", ObjetoRespuesta.class);
+        xstream.autodetectAnnotations(true);
 
         //Obtenemos la dirección relativa para guardar un archivo persistente de 
         //datos.
@@ -83,10 +85,11 @@ public class ServidorHotel extends HttpServlet {
 
         String webPath = request.getServletPath();
         ArrayList<String> resultados = new ArrayList<>();
+        ObjetoRespuesta respuesta = new ObjetoRespuesta();
 
         //System.out.println("Peticion recibida -->" +  webPath);
         int nParametros = 0;
-        String xml = "";
+        String xml = Constantes.XML_HEADER + "\n";
 
         switch (webPath) {
             case "/ConsultaNIF":
@@ -98,48 +101,55 @@ public class ServidorHotel extends HttpServlet {
                     //Consultamos con nuestro ArrayList 
                     Huesped h = getHuesped(consulta); //Si hay un huesped con ese dni lo recupera
                     //y sino devuelve null
-                    if(h!=null){
-                        xml = xstream.toXML(h);
-                    }else{
-                        //Mensaje error
+                    if (h != null) {
+
+                        respuesta = new ObjetoRespuesta(true, h.getClass().getSimpleName(), h, "");
+
+                    } else {
+                        respuesta = new ObjetoRespuesta(false, h.getClass().getSimpleName(), null, "No se ha encontrado ningún huesped");
                     }
-                    
+
                 } else {
-                    // resultados.add("Error");
+                    respuesta = new ObjetoRespuesta(false, Huesped.class.getSimpleName(), null, "URL Malformada");
                 }
-        
+
                 break;
             case "/ConsultaNombre":
                 //Parametros --> Recibe Nombre y apellido. los dos.
                 nParametros = request.getParameterMap().size();
                 if (nParametros > 1) {
                     //String a consultar con el servidor
-                    String consulta = URLDecoder.decode(request.getParameter(Constantes.NAME_KEY), "ISO-8859-1");
-                    String consulta1 = URLDecoder.decode(request.getParameter(Constantes.SURNAME_KEY), "UTF-8");
+                    String name = URLDecoder.decode(request.getParameter(Constantes.NAME_KEY), "ISO-8859-1");
+                    String surname = URLDecoder.decode(request.getParameter(Constantes.SURNAME_KEY), "UTF-8");
                     //Consultamos con nuestro ArrayList de servidores, primero el nombre
-
+                    ArrayList<Huesped> aux = new ArrayList<>();
                     for (Huesped h : huespedes) {
-                        if (!consulta.equals("") && (!consulta1.equals(""))) {
-                            if (h.getNombre().equals(consulta) && h.getApellidos().equals(consulta1)) {
-                                resultados.add(h.toString());
-                            } else if (!consulta.equals("")) {
-                                if (h.getNombre().equals(consulta)) {
-                                    resultados.add(h.toString());
-                                }
-                            } else {
-                                if (h.getApellidos().equals(consulta1)) {
-                                    resultados.add(h.toString());
-                                }
+                        if (!name.equals("") && (!surname.equals(""))) {
+                            if (h.getNombre().equals(name) && h.getApellidos().equals(surname)) {
+                                aux.add(h);
+                            }
+                        } else if (!name.equals("")) {
+                            if (h.getNombre().equals(name)) {
+                                aux.add(h);
                             }
                         } else {
-                            // resultados.add("Error");
+                            if (h.getApellidos().equals(surname)) {
+                                aux.add(h);
+                            }
+                        }
+
+                        if (aux.isEmpty()) {
+                            xml = xstream.toXML("No se ha encontrado ningun elemento relacionado con la busqueda");
+                        } else {
+                            xml = xstream.toXML(aux);
                         }
                     }
                 }
                 break;
-            case "/AñadirHuesped":
+            case "/AddHuesped":
                 nParametros = request.getParameterMap().size();
-                if (nParametros >= 10) {
+                boolean success = true;
+                if (nParametros >= 1) {
 
                     // HashMap<String,String> datosHuesped =
                     String nif = request.getParameter(Constantes.NIF_KEY);
@@ -149,28 +159,30 @@ public class ServidorHotel extends HttpServlet {
                         Huesped huesped;
                         String name = request.getParameter(Constantes.NAME_KEY);
                         String apellidos = request.getParameter(Constantes.SURNAME_KEY);
-                        String dir = request.getParameter(Constantes.ADDRESS_KEY);
-                        String localidad = request.getParameter(Constantes.LOCALIDAD_KEY);
-                        String provincia = request.getParameter(Constantes.PROVINCIA_KEY);
-                        String cp = request.getParameter(Constantes.CP_KEY);
+//                        String dir = request.getParameter(Constantes.ADDRESS_KEY);
+//                        String localidad = request.getParameter(Constantes.LOCALIDAD_KEY);
+//                        String provincia = request.getParameter(Constantes.PROVINCIA_KEY);
+//                        String cp = request.getParameter(Constantes.CP_KEY);
                         String nacimiento = request.getParameter(Constantes.BIRTHDATE_KEY);
-                        String movil = request.getParameter(Constantes.MOVIL_KEY);
-                        String fijo = request.getParameter(Constantes.FIJO_KEY);
-                        String mail = request.getParameter(Constantes.MAIL_KEY);
+//                        String movil = request.getParameter(Constantes.MOVIL_KEY);
+//                        String fijo = request.getParameter(Constantes.FIJO_KEY);
+//                        String mail = request.getParameter(Constantes.MAIL_KEY);
                         //Terminar de rellenar
 
-                        huesped = new Huesped(name, apellidos, nif);
+                        huesped = new Huesped(name, apellidos, nif, nacimiento);
 
                         huespedes.add(huesped); //Añadimos a la lista el huesped creado.
                         //Enviar mensaje XML
-                        //Success = true;
-                        resultados.add("Se ha añadido con exito");
+
+                        xml = xstream.toXML(success);
                     } else {
-                        resultados.add("El DNI Ya existe");
+                        success = false;
+                        xml = xstream.toXML(success);
                     }
 
                 } else {
-                    resultados.add("Error al añadir");
+                    success = false;
+                    xml = xstream.toXML(success);
                 }
                 break;
 
@@ -193,15 +205,15 @@ public class ServidorHotel extends HttpServlet {
                     String nif = request.getParameter(Constantes.NIF_KEY);
                     String name = request.getParameter(Constantes.NAME_KEY);
                     String apellidos = request.getParameter(Constantes.SURNAME_KEY);
-                    
+
                     Huesped h = getHuesped(nif);
-                    if(h!=null){
-                    h.setNombre(name);
-                    h.setApellidos(apellidos);
-                    }else{
+                    if (h != null) {
+                        h.setNombre(name);
+                        h.setApellidos(apellidos);
+                    } else {
                         //No se encuentra
                     }
-                }else{
+                } else {
                     //URL MAL FORMADA
                 }
                 break;
@@ -212,14 +224,14 @@ public class ServidorHotel extends HttpServlet {
                     String localidad = request.getParameter(Constantes.LOCALIDAD_KEY);
                     String provincia = request.getParameter(Constantes.PROVINCIA_KEY);
                     String cp = request.getParameter(Constantes.CP_KEY);
-                    
+
                     Huesped h = getHuesped(nif);
-                    if(h!=null){
-                    h.setDomicilio(dir, cp, provincia, localidad);
-                    }else{
+                    if (h != null) {
+                        h.setDomicilio(dir, cp, provincia, localidad);
+                    } else {
                         //No se encuentra
                     }
-                }else{
+                } else {
                     //URL MAL FORMADA
                 }
                 break;
@@ -227,14 +239,14 @@ public class ServidorHotel extends HttpServlet {
                 if (nParametros >= 1) {
                     String nif = request.getParameter(Constantes.NIF_KEY);
                     String nacimiento = request.getParameter(Constantes.BIRTHDATE_KEY);
-                    
+
                     Huesped h = getHuesped(nif);
-                    if(h!=null){
-                    h.setNacimiento(nacimiento);
-                    }else{
+                    if (h != null) {
+                        h.setNacimiento(nacimiento);
+                    } else {
                         //No se encuentra
                     }
-                }else{
+                } else {
                     //URL MAL FORMADA
                 }
                 break;
@@ -246,16 +258,16 @@ public class ServidorHotel extends HttpServlet {
                     String movil = request.getParameter(Constantes.MOVIL_KEY);
                     String fijo = request.getParameter(Constantes.FIJO_KEY);
                     String mail = request.getParameter(Constantes.MAIL_KEY);
-                    
+
                     Huesped h = getHuesped(nif);
-                    if(h!=null){
-                    h.setMovil(movil);
-                    h.setCorreo(mail);
-                    h.setFijo(fijo);
-                    }else{
+                    if (h != null) {
+                        h.setMovil(movil);
+                        h.setCorreo(mail);
+                        h.setFijo(fijo);
+                    } else {
                         //No se encuentra
                     }
-                }else{
+                } else {
                     //URL MAL FORMADA
                 }
                 break;
@@ -333,10 +345,15 @@ public class ServidorHotel extends HttpServlet {
                 "application/xml;charset=UTF-8"); //Devolvemos un XML
         try (PrintWriter out = response.getWriter()) {
             out.println(Constantes.XML_HEADER);
-            out.println(xml);
-            
+            out.println(xstream.toXML(respuesta));
 
         }
+
+//        ObjetoRespuesta repuesta1 = (ObjetoRespuesta) xstream.fromXML(xstream.toXML(respuesta));
+//        if (repuesta1.getType().equals("Huesped")) {
+//            Huesped h = (Huesped) repuesta1.getObjeto();
+//        }
+        //Ejemplo recogida datos
     }
 
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -400,8 +417,10 @@ public class ServidorHotel extends HttpServlet {
 
     /**
      * Recibe un parametro String nif y busca si hay algún objeto asociado a el.
+     *
      * @param nif nif a buscar
-     * @return Huesped en caso de encontrarlo, null en caso de que no lo encuentre.
+     * @return Huesped en caso de encontrarlo, null en caso de que no lo
+     * encuentre.
      */
     private Huesped getHuesped(String nif) {
         Huesped huesped = null;
