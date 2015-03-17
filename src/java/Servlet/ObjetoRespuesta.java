@@ -20,7 +20,7 @@ public class ObjetoRespuesta {
     private Boolean success;
     
     //Que tipo de objeto vamos a devolver en el XML Interno
-    private String Type;
+    //private String Type;
     
     //XML Interno con todo lo que tenemos que meter
     private Object objeto ;
@@ -30,9 +30,9 @@ public class ObjetoRespuesta {
     public ObjetoRespuesta() {
     }
 
-    public ObjetoRespuesta(Boolean success, String Type, Object o, String error) {
+    public ObjetoRespuesta(Boolean success, Object o, String error) {
         this.success = success;
-        this.Type = Type;
+        //this.Type = Type;
         this.objeto = o;
         this.error = error;
     }
@@ -51,19 +51,19 @@ public class ObjetoRespuesta {
         this.success = success;
     }
 
-    /**
-     * @return the Type
-     */
-    public String getType() {
-        return Type;
-    }
-
-    /**
-     * @param Type the Type to set
-     */
-    public void setType(String Type) {
-        this.Type = Type;
-    }
+//    /**
+//     * @return the Type
+//     */
+//    public String getType() {
+//        return Type;
+//    }
+//
+//    /**
+//     * @param Type the Type to set
+//     */
+//    public void setType(String Type) {
+//        this.Type = Type;
+//    }
 
  
 

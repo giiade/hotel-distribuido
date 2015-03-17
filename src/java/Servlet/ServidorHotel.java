@@ -7,9 +7,10 @@
  */
 package Servlet;
 
+import Helper.Constantes;
 import Helper.Huesped;
 import Helper.Reserva;
-import Helper.Constantes;
+import com.thoughtworks.xstream.XStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URLDecoder;
@@ -17,10 +18,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -28,7 +26,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import com.thoughtworks.xstream.XStream;
 
 /**
  *
@@ -103,14 +100,15 @@ public class ServidorHotel extends HttpServlet {
                     //y sino devuelve null
                     if (h != null) {
 
-                        respuesta = new ObjetoRespuesta(true, h.getClass().getSimpleName(), h, "");
+                        respuesta = new ObjetoRespuesta(true, h, "");
 
                     } else {
-                        respuesta = new ObjetoRespuesta(false, h.getClass().getSimpleName(), null, "No se ha encontrado ningún huesped");
+                        //Error
+                        respuesta = new ObjetoRespuesta(false, null, "No se ha encontrado ningún huesped");
                     }
 
                 } else {
-                    respuesta = new ObjetoRespuesta(false, Huesped.class.getSimpleName(), null, "URL Malformada");
+                    respuesta = new ObjetoRespuesta(false, null, "URL Malformada");
                 }
 
                 break;
@@ -137,21 +135,25 @@ public class ServidorHotel extends HttpServlet {
                                 aux.add(h);
                             }
                         }
-
-                        if (aux.isEmpty()) {
-                            xml = xstream.toXML("No se ha encontrado ningun elemento relacionado con la busqueda");
-                        } else {
-                            xml = xstream.toXML(aux);
-                        }
                     }
+
+                    if (aux.isEmpty()) {
+                        //Error
+                        respuesta = new ObjetoRespuesta(false, aux, "No se ha encontrado ningun dato");
+                    } else {
+                        //Success
+                        respuesta = new ObjetoRespuesta(true, aux, "");
+                    }
+
+                } else {
+                    //error
+                    respuesta = new ObjetoRespuesta(false, null, "URL malformada");
                 }
                 break;
             case "/AddHuesped":
                 nParametros = request.getParameterMap().size();
-                boolean success = true;
-                if (nParametros >= 1) {
+                if (nParametros >= 5) {
 
-                    // HashMap<String,String> datosHuesped =
                     String nif = request.getParameter(Constantes.NIF_KEY);
 
                     if (compruebaNif(nif)) {
@@ -159,30 +161,28 @@ public class ServidorHotel extends HttpServlet {
                         Huesped huesped;
                         String name = request.getParameter(Constantes.NAME_KEY);
                         String apellidos = request.getParameter(Constantes.SURNAME_KEY);
-//                        String dir = request.getParameter(Constantes.ADDRESS_KEY);
-//                        String localidad = request.getParameter(Constantes.LOCALIDAD_KEY);
-//                        String provincia = request.getParameter(Constantes.PROVINCIA_KEY);
-//                        String cp = request.getParameter(Constantes.CP_KEY);
+                        String dir = request.getParameter(Constantes.ADDRESS_KEY);
+                        String localidad = request.getParameter(Constantes.LOCALIDAD_KEY);
+                        String provincia = request.getParameter(Constantes.PROVINCIA_KEY);
+                        String cp = request.getParameter(Constantes.CP_KEY);
                         String nacimiento = request.getParameter(Constantes.BIRTHDATE_KEY);
-//                        String movil = request.getParameter(Constantes.MOVIL_KEY);
-//                        String fijo = request.getParameter(Constantes.FIJO_KEY);
-//                        String mail = request.getParameter(Constantes.MAIL_KEY);
+                        String movil = request.getParameter(Constantes.MOVIL_KEY);
+                        String fijo = request.getParameter(Constantes.FIJO_KEY);
+                        String mail = request.getParameter(Constantes.MAIL_KEY);
                         //Terminar de rellenar
 
-                        huesped = new Huesped(name, apellidos, nif, nacimiento);
+                        huesped = new Huesped(name, apellidos, nif, nacimiento, dir, cp, localidad, provincia, fijo, movil, mail);
 
                         huespedes.add(huesped); //Añadimos a la lista el huesped creado.
                         //Enviar mensaje XML
 
-                        xml = xstream.toXML(success);
+                        respuesta = new ObjetoRespuesta(true, "Cliente añadido", "");
                     } else {
-                        success = false;
-                        xml = xstream.toXML(success);
+                        respuesta = new ObjetoRespuesta(false, null, "El dni ya está registrado");
                     }
 
                 } else {
-                    success = false;
-                    xml = xstream.toXML(success);
+                    respuesta = new ObjetoRespuesta(false, null, "URL malformada");
                 }
                 break;
 
@@ -194,9 +194,13 @@ public class ServidorHotel extends HttpServlet {
                     Huesped h = getHuesped(nif);
                     if (h != null) {
                         huespedes.remove(h);
+                        respuesta = new ObjetoRespuesta(true, "Cliente Eliminado", "");
+
                     } else {
-                        //Mensaje de no se encuentra
+                        respuesta = new ObjetoRespuesta(false, null, "El dni " + nif + " ya está registrado");
                     }
+                } else {
+                    respuesta = new ObjetoRespuesta(false, null, "URL malformada");
                 }
                 break;
             case "/ModificarHuesped/CambiarNombre":
@@ -210,11 +214,13 @@ public class ServidorHotel extends HttpServlet {
                     if (h != null) {
                         h.setNombre(name);
                         h.setApellidos(apellidos);
+                        respuesta = new ObjetoRespuesta(true, "Nombre Cambiado con exito", "");
+
                     } else {
-                        //No se encuentra
+                        respuesta = new ObjetoRespuesta(true, null, "No se encuentra el DNI");
                     }
                 } else {
-                    //URL MAL FORMADA
+                    respuesta = new ObjetoRespuesta(true, null, "URL mal formada");
                 }
                 break;
             case "/ModificarHuesped/CambiarDomicilio":
@@ -228,11 +234,12 @@ public class ServidorHotel extends HttpServlet {
                     Huesped h = getHuesped(nif);
                     if (h != null) {
                         h.setDomicilio(dir, cp, provincia, localidad);
+                        respuesta = new ObjetoRespuesta(true, "Domicilio cambiado con exito", "");
                     } else {
-                        //No se encuentra
+                        respuesta = new ObjetoRespuesta(false, null, "No se encuentra el DNI");
                     }
                 } else {
-                    //URL MAL FORMADA
+                    respuesta = new ObjetoRespuesta(true, null, "URL mal formada");
                 }
                 break;
             case "/ModificarHuesped/CambiarNacimiento":
@@ -243,11 +250,12 @@ public class ServidorHotel extends HttpServlet {
                     Huesped h = getHuesped(nif);
                     if (h != null) {
                         h.setNacimiento(nacimiento);
+                        respuesta = new ObjetoRespuesta(true, "Fecha de nacimiento cambiada con exito", "");
                     } else {
-                        //No se encuentra
+                        respuesta = new ObjetoRespuesta(true, null, "No se encuentra el DNI");
                     }
                 } else {
-                    //URL MAL FORMADA
+                    respuesta = new ObjetoRespuesta(true, null, "URL mal formada");
                 }
                 break;
             case "/ModificarHuesped/CambiarOpcional":
@@ -264,81 +272,178 @@ public class ServidorHotel extends HttpServlet {
                         h.setMovil(movil);
                         h.setCorreo(mail);
                         h.setFijo(fijo);
+                        respuesta = new ObjetoRespuesta(true, "Parametros opcionales actualizados con exito", "");
                     } else {
-                        //No se encuentra
+                        respuesta = new ObjetoRespuesta(true, null, "No se encuentra el DNI");
                     }
                 } else {
-                    //URL MAL FORMADA
+                    respuesta = new ObjetoRespuesta(true, null, "URL mal formada");
                 }
                 break;
 
             case "/ConsultarReservas":
                 nParametros = request.getParameterMap().size();
-                if (nParametros > 1) {
+                if (nParametros > 0) {
                     //Buscamos por dni y fecha
-                    String id = request.getParameter(Constantes.NIF_KEY);
+                    //String id = request.getParameter(Constantes.NIF_KEY);
                     //Recogemos NIF
                     String fecha = request.getParameter(Constantes.FENTRADA_KEY);
-                    Date date = null;
+                    Date date;
                     try {
                         date = Constantes.DATE_FORMAT.parse(fecha);
                     } catch (ParseException ex) {
-                        Logger.getLogger(ServidorHotel.class.getSimpleName()).log(Level.SEVERE, "EROOR PARSING", ex);
+                        respuesta = new ObjetoRespuesta(false, null, "Error al convertir fecha \"dd/MM/YYY\"");
+                        break;
+                        //Logger.getLogger(ServidorHotel.class.getSimpleName()).log(Level.SEVERE, "ERROR PARSING", ex);
                     }
-
-                    for (Reserva r : reservasCliente.get(id)) {
-                        //Recorremos todas las reservas realizadas por un DNI
-                        if (r.getfEntrada().equals(date)) {
-                            resultados.add(r.toString());
+                    reservas = new ArrayList<>();
+                    for (String key : reservasCliente.keySet()) {
+                        for (Reserva r : reservasCliente.get(key)) {
+                            //Recorremos todas las reservas realizadas por un DNI
+                            if (r.getfEntrada().equals(date)) {
+                                reservas.add(r);
+                            }
                         }
                     }
-
+                    if (!reservas.isEmpty()) {
+                        respuesta = new ObjetoRespuesta(true, reservas, "");
+                    } else {
+                        respuesta = new ObjetoRespuesta(false, null, "No hay ninguna coincidencia");
+                    }
                 } else {
-                    resultados.add("NADA DE NADA");
+                    respuesta = new ObjetoRespuesta(true, null, "URL mal formada");
                 }
                 break;
             case "/ModificarReservas/cambiarFentrada":
-                //Por hacer. Pensar si hacer cada uno por separado o no
-                //Afectaria a modificarhuesped tambien. 
+                nParametros = request.getParameterMap().size();
+                if (nParametros >= 2) {
+                    String nif = request.getParameter(Constantes.NIF_KEY);
+                    String fEntrada = request.getParameter(Constantes.FENTRADA_KEY);
+                    Date date;
+                    try {
+                        date = Constantes.DATE_FORMAT.parse(fEntrada);
+                    } catch (ParseException ex) {
+                        respuesta = new ObjetoRespuesta(false, null, "Error al convertir fecha \"dd/MM/YYY\"");
+                        break;
+                        //salimos para enviar el mensaje de fallo.
+                    }
+
+                    Reserva r = getReserva(nif, date);
+                    if (r != null) {
+                        r.setfEntrada(date);
+                        respuesta = new ObjetoRespuesta(true, "Fecha de entrada cambiada con exito", "");
+
+                    } else {
+                        respuesta = new ObjetoRespuesta(true, null, "No se encuentra el NIF o la fecha de entrada");
+                    }
+                } else {
+                    respuesta = new ObjetoRespuesta(true, null, "URL mal formada");
+                }
                 break;
             case "/ModificarReservas/cambiarFsalida":
-                break;
-            case "/ModificarReservas/EliminarHabitacion":
-                break;
-            case "/AñadirReserva":
-                //Recibimos NIF y Fechas de entrada y salida.
-
-                String nif = request.getParameter(Constantes.NIF_KEY);
-                String fEntrada = request.getParameter(Constantes.FENTRADA_KEY);
-                String fSalida = request.getParameter(Constantes.FSALIDA_KEY);
-
-                //Comprobamos que el dni del supuesto Huesped esté en la lista
-                if (compruebaNif(nif)) {
-                    //Si tenemos un huesped en la lista con ese dni creamos un
-                    //objeto Reserva
-                    Reserva r = null;
-                    //Generamos un numero de habitación aleatorio entre 100 y 599
-                    int nHabitacion = (int) new Random().nextDouble() * 600 + 100;
-                    r = new Reserva(nif, nHabitacion, fEntrada, fSalida);
-                    //Añadimos la habitacion a la lista.
-                    if (reservasCliente.containsKey(nif)) {
-                        reservasCliente.get(nif).add(r);
-                    } else {
-                        reservas = new ArrayList<>();
-                        reservas.add(r);
-                        reservasCliente.put(nif, reservas);
+                nParametros = request.getParameterMap().size();
+                if (nParametros >= 2) {
+                    String nif = request.getParameter(Constantes.NIF_KEY);
+                    String fEntrada = request.getParameter(Constantes.FENTRADA_KEY);
+                    String fSalida = request.getParameter(Constantes.FSALIDA_KEY);
+                    Date dateE,dateS;
+                    try {
+                        dateE = Constantes.DATE_FORMAT.parse(fEntrada);
+                        dateS = Constantes.DATE_FORMAT.parse(fSalida);
+                    } catch (ParseException ex) {
+                        respuesta = new ObjetoRespuesta(false, null, "Error al convertir fecha \"dd/MM/YYY\"");
+                        break;
+                        //Salimos para enviar el mensaje de fallo.
                     }
-                    //Success = true; -> Codigo HTTP 202, o algo así.
+
+                    Reserva r = getReserva(nif, dateE);
+                    if (r != null) {
+                        r.setfSalida(dateS);
+                        respuesta = new ObjetoRespuesta(true, "Fecha de salida cambiada con exito", "");
+
+                    } else {
+                        respuesta = new ObjetoRespuesta(true, null, "No se encuentra el NIF o la fecha de entrada");
+                    }
+                } else {
+                    respuesta = new ObjetoRespuesta(true, null, "URL mal formada");
                 }
+                break;
+            case "/ModificarReservas/EliminarReserva":
+                nParametros = request.getParameterMap().size();
+                if (nParametros >= 2) {
+                    String nif = request.getParameter(Constantes.NIF_KEY);
+                    String fEntrada = request.getParameter(Constantes.FENTRADA_KEY);
+                    Date date;
+                    try {
+                        date = Constantes.DATE_FORMAT.parse(fEntrada);
+                    } catch (ParseException ex) {
+                        respuesta = new ObjetoRespuesta(false, null, "Error al convertir fecha \"dd/MM/YYY\"");
+                        break;
+                        //salimos para enviar el mensaje de fallo.
+                    }
+
+                    Reserva r = getReserva(nif, date);
+                    if (r != null) {
+                        reservasCliente.get(nif).remove(r);
+                        respuesta = new ObjetoRespuesta(true, "Reserva eliminada", "");
+
+                    } else {
+                        respuesta = new ObjetoRespuesta(true, null, "No se encuentra el NIF o la fecha de entrada");
+                    }
+                } else {
+                    respuesta = new ObjetoRespuesta(true, null, "URL mal formada");
+                }
+                break;
+            case "/AddReserva":
+
+                nParametros = request.getParameterMap().size();
+
+                if (nParametros > 1) {
+                    //Recibimos NIF y Fechas de entrada y salida.
+                    String nif = request.getParameter(Constantes.NIF_KEY);
+                    String fEntrada = request.getParameter(Constantes.FENTRADA_KEY);
+                    String fSalida = request.getParameter(Constantes.FSALIDA_KEY);
+
+                    //Comprobamos que el dni del supuesto Huesped esté en la lista
+                    if (!compruebaNif(nif)) {
+                        //Si tenemos un huesped en la lista con ese dni creamos un
+                        //objeto Reserva
+                        Reserva r = null;
+                        //Generamos un numero de habitación aleatorio entre 100 y 599
+                        int nHabitacion = (int) (new Random().nextDouble() * 500) + 100;
+                        try {
+                            r = new Reserva(nif, nHabitacion, fEntrada, fSalida);
+                        } catch (ParseException ex) {
+                            respuesta = new ObjetoRespuesta(false, null, "Error al convertir fecha \"dd/MM/YYY\"");
+                            break;
+                        }
+                        //Añadimos la habitacion a la lista.
+                        if (reservasCliente.containsKey(nif)) {
+                            //Comprobamos si la clave reservas ya existe
+                            if (!ComprobarFecha(nif, r.getfEntrada())) {
+                                reservasCliente.get(nif).add(r);
+                            } else {
+                                respuesta = new ObjetoRespuesta(false, null, "Ya exixste reserva para ese día");
+                                break;
+                            }
+                        } else {
+                            reservas = new ArrayList<>();
+                            reservas.add(r);
+                            reservasCliente.put(nif, reservas);
+                        }
+                        respuesta = new ObjetoRespuesta(true, "Reserva creada", "");
+                    } else {
+                        respuesta = new ObjetoRespuesta(false, null, "No existe un huesped con ese NIF");
+                    }
+                } else {
+                    respuesta = new ObjetoRespuesta(true, null, "URL mal formada");
+                }
+
                 break;
             default:
                 //Mensaje que enviamos si no entra por ninguno de estos.
                 break;
 
-        }
-
-        if (resultados.isEmpty()) {
-            resultados.add("No se ha encontrado nada");
         }
 
         response.setContentType(
@@ -350,8 +455,11 @@ public class ServidorHotel extends HttpServlet {
         }
 
 //        ObjetoRespuesta repuesta1 = (ObjetoRespuesta) xstream.fromXML(xstream.toXML(respuesta));
-//        if (repuesta1.getType().equals("Huesped")) {
-//            Huesped h = (Huesped) repuesta1.getObjeto();
+//        if (repuesta1.getObjeto() instanceof ArrayList){
+//            ArrayList h = (ArrayList) repuesta1.getObjeto();
+//            if(h.get(0) instanceof Reserva){
+//                Reserva r = (Reserva) h.get(0);
+//            }
 //        }
         //Ejemplo recogida datos
     }
@@ -430,6 +538,41 @@ public class ServidorHotel extends HttpServlet {
             }
         }
         return huesped;
+    }
+
+    /**
+     * Comprueba si la fecha dada esta repetida
+     *
+     * @param date la fecha en formato "dd/MM/YYYY"
+     * @return true si encuentra la fecha, false en caso contrario.
+     */
+    private Boolean ComprobarFecha(String id, Date date) {
+        for (Reserva r : reservasCliente.get(id)) {
+            //Recorremos todas las reservas realizadas por un DNI
+            if (r.getfEntrada().equals(date)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Recibe un NIF y una fecha de entrada y nos devuelve la reserva asociada
+     * si la hay
+     *
+     * @param id Nif del Huesped
+     * @param fEntrada Fecha de entrada en formato "dd/MM/YYYY"
+     * @return Objeto reserva con la reserva o null.
+     */
+    private Reserva getReserva(String id, Date fEntrada) {
+        Reserva reserva = null;
+        for (Reserva r : reservasCliente.get(id)) {
+            //Recorremos todas las reservas realizadas por un DNI
+            if (r.getfEntrada().equals(fEntrada)) {
+                return r;
+            }
+        }
+        return reserva;
     }
 
 }

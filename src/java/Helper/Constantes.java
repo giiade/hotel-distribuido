@@ -23,7 +23,7 @@ public class Constantes {
     public final static String     SURNAME_KEY= "apellidos";
     public final static String     NIF_KEY = "NIF";
     public final static String     BIRTHDATE_KEY = "nacimiento";
-    public final static String     ADDRESS_KEY = "dirección";
+    public final static String     ADDRESS_KEY = "direccion";
     public final static String     LOCALIDAD_KEY = "localidad";
     public final static String     PROVINCIA_KEY = "provincia"; //Provincia
     public final static String     CP_KEY = "CP";

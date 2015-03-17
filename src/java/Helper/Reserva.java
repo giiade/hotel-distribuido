@@ -7,6 +7,7 @@
  */
 package Helper;
 
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.logging.Level;
@@ -17,7 +18,8 @@ import java.util.logging.Logger;
  * Fecha de entrada Fecha de salidad
  */
 public class Reserva {
-
+    
+    @XStreamOmitField
     private final String LOG = getClass().getCanonicalName();
 
     private String NIF;
@@ -40,15 +42,15 @@ public class Reserva {
         }
     }
 
-    public Reserva(String NIF, int habitacionId, String fEntrada, String fSalida) {
+    public Reserva(String NIF, int habitacionId, String fEntrada, String fSalida) throws ParseException {
         this.NIF = NIF;
         this.habitacionId = habitacionId;
-        try {
+        
             this.fEntrada = Constantes.DATE_FORMAT.parse(fEntrada);
             this.fSalida = Constantes.DATE_FORMAT.parse(fSalida);
-        } catch (ParseException ex) {
-            Logger.getLogger(LOG).log(Level.SEVERE, "Error parseando Constructor Vacio \n{0}", ex.getMessage());
-        }
+       
+            
+        
     }
 
     /**
