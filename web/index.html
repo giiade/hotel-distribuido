@@ -18,17 +18,21 @@
     <body>
 
 
-        <!-- MODALES -->
+        <!-- MODALES Huesped -->
         <!-- MODAL NIF -->
         <div id="cNifModal" class="modal fade" >
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
-                    <form method="GET" action=":8080/Hotel_SD/ServletWebApp">
+                    <form method="GET" action="/Hotel_SD/ServletWebApp">
+                        
+                        <input type="hidden" name ="operacion" value="ConsultaNIF"/>
+                        
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                             <h4 class="modal-title">Consultar por NIF</h4>
                         </div>
                         <div class="modal-body">
+                            
                             <input type="text" class="form-control" name='NIF' id="NIF" placeholder="SU NIF">
                         </div>
                         <div class="modal-footer">
@@ -45,7 +49,7 @@
                 <div class="modal-content">
                     <form method="GET" action="http://localhost:8080/Hotel_SD/ServletWebApp">
 
-                        <input type="hidden" name="parametro" value="ConsultaNombre"/>
+                        <input type="hidden" name="operacion" value="ConsultaNombre"/>
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                             <h4 class="modal-title">Consultar por Nombre o apellido</h4>
@@ -73,7 +77,9 @@
         <div id="AddHuespedModal" class="modal fade" >
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
-                    <form method="GET" action="http://localhost:8080/Hotel_SD/ServletWebApp">
+                    <form method="POST" action="http://localhost:8080/Hotel_SD/ServletWebApp">
+                        
+                        <input type="hidden" name ="operacion" value="AddHuesped"/>
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                             <h4 class="modal-title">Añadir Huesped</h4>
@@ -147,7 +153,8 @@
         <div id="ModHuespedModal" class="modal fade" >
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
-                    <form method="GET" action="http://localhost:8080/Hotel_SD/ServletWebApp">
+                    <form method="POST" action="http://localhost:8080/Hotel_SD/ServletWebApp">
+                        <input type="hidden" name ="operacion" value="ConsultaNIF"/>
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                             <h4 class="modal-title">Modificar Datos</h4>
@@ -223,7 +230,8 @@
         <div id="EliminarHuespedModal" class="modal fade" >
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
-                    <form method="GET" action="http://localhost:8080/Hotel_SD/ServletWebApp">
+                    <form method="POST" action="http://localhost:8080/Hotel_SD/ServletWebApp">
+                        <input type="hidden" name ="operacion" value="ModificarHuesped/Eliminar"/>
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                             <h4 class="modal-title">Consultar por NIF</h4>
@@ -241,7 +249,148 @@
             </div>
         </div>
 
+        <!-- Modal Reservas -->
+
+        <!-- Consulta Reservas -->
+        <div id="cReservasModal" class="modal fade" >
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <form method="GET" action="http://localhost:8080/Hotel_SD/ServletWebApp">
+                        <input type="hidden" name ="operacion" value="ConsultarReservas"/>
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">Consultar Reservas</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Introduzca la fecha de entrada para obtener todas las habitaciones 
+                                registradas a ese día</p>
+                            <label form="name" class="control-label">Fecha de entrada</label>
+                            <input type="date" class="form-control" name='entrada' id="entrada"/>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="submit"   class="btn btn-success "/>
+                            <button type="button"  class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Añadir Reserva -->
+        <div id="addReservaModal" class="modal fade" >
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <form method="POST" action="http://localhost:8080/Hotel_SD/ServletWebApp">
+                        <input type="hidden" name ="operacion" value="AddReserva"/>
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">Modificar Datos</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p class="text-info">Introduzca el NIF de un huesped registrado.</p>
+                            <div class="modal-body">
+                                <label form="name" class="col-sm-6 control-label">NIF</label>
+                                <input type="text" class="form-control" name='NIF' id="NIF" placeholder="NIF del huesped">
+                            </div>
+                            <hr/>
+                            <p class="text-info">Datos pertinentes a la reserva</p>
+                            <div class="row">
+                                <div class="form-group col-sm-6">
+                                    <label form="name" class="col-sm-6 control-label">Fecha de entrada</label>
+                                    <input type="date" class="form-control" name='entrada'/>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label form="name" class="col-sm-6 control-label">Fecha de salida</label>
+                                    <input type="date" class="form-control" name='salida' />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="submit"   class="btn btn-success "/>
+                            <button type="button"  class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modificar Reservas -->
+        <div id="modReservaModal" class="modal fade" >
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <form method="GET" action="http://localhost:8080/Hotel_SD/ServletWebApp">
+                        <input type="hidden" name ="operacion" value="ModificarHuesped/Eliminar"/>
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">Modificar Datos</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p class="text-info">Introduzca el NIF de un huesped registrado.</p>
+                            <div class="modal-body">
+                                <label form="name" class="col-sm-6 control-label">NIF</label>
+                                <input type="text" class="form-control" name='NIF' id="NIF" placeholder="NIF del huesped">
+                            </div>
+                            <hr/>
+                            <p class="text-info">Introduzca la fecha que quiere cambiar.
+                                Si solo quiere cambiar una de las dos, deje en blanco la 
+                                que no quiere cambiar</p>
+                            <div class="row">
+                                <div class="form-group col-sm-6">
+                                    <label form="name" class="col-sm-6 control-label">Fecha de entrada</label>
+                                    <input type="date" class="form-control" name='entrada'/>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label form="name" class="col-sm-6 control-label">Fecha de salida</label>
+                                    <input type="date" class="form-control" name='salida' />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="submit"   class="btn btn-success "/>
+                            <button type="button"  class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Eliminar Reserva -->
         
+        <div id="eliminarReservaModal" class="modal fade">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <form method="GET" action="http://localhost:8080/Hotel_SD/ServletWebApp">
+                        <input type="hidden" name ="operacion" value="ModificarReservas/EliminarReserva"/>
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">Modificar Datos</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p class="text-info">Introduzca el NIF de un huesped registrado.</p>
+                            <div class="modal-body">
+                                <label form="name" class="col-sm-6 control-label">NIF</label>
+                                <input type="text" class="form-control" name='NIF' id="NIF" placeholder="NIF del huesped">
+                            </div>
+                            <hr/>
+                            <p class="text-info">Introduzca la fecha de entrada de la reserva</p>
+                            <div class="row">
+                                <div class="form-group col-sm-6">
+                                    <label form="name" class="col-sm-6 control-label">Fecha de entrada</label>
+                                    <input type="date" class="form-control" name='entrada'/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="submit"   class="btn btn-success "/>
+                            <button type="button"  class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+
+
+
 
 
 
@@ -262,47 +411,53 @@
 
                         <p>Consultar entre los huespedes por NIF</p>
                         <p><a href="#cNifModal" role="button" class="btn btn-primary" data-toggle="modal">Consultar Por NIF</a></p> 
-                        
+
                         <hr />
 
                         <p>Consultar entre los huespedes por nombre o apellidos</p>
                         <p><a href="#cNombreModal" role="button" class="btn btn-primary" data-toggle="modal">Consultar Por Nombre</a></p> 
 
                         <hr />
-                        
+
                         <p>Añadir un huesped nuevo a la lista</p>
                         <p><a href="#AddHuespedModal" role="button" class="btn btn-primary" data-toggle="modal">Añadir Huesped</a></p> 
 
                         <hr />
-                        
+
                         <p>Modificar datos del huesped <strong>no se modificará el NIF</strong></p>
                         <p><a href="#ModHuespedModal" role="button" class="btn btn-primary" data-toggle="modal">Modificar huesped</a></p> 
 
                         <hr />
-                        
-                        <p>Eliminar huesped <strong>Esta acción no se puede deshacer.</strong></p>
+
+                        <p>Eliminar huesped <strong class="text-danger">Esta acción no se puede deshacer.</strong></p>
                         <p><a href="#EliminarHuespedModal" role="button" class="btn btn-primary" data-toggle="modal">Eliminar Huesped</a></p> 
-                        
-                        <hr />
+
+                       
                     </div>
 
 
                     <div class="col-sm-3 col-md-offset-1">
                         <h3>Reservas</h3>
+                        
+                         <hr />
+                         
                         <p>Dada una fecha consultar reservas</p>
-                        <p><a href="#EliminarHuespedModal" role="button" class="btn btn-primary" data-toggle="modal">Consultar Reservas</a></p> 
+                        <p><a href="#cReservasModal" role="button" class="btn btn-primary" data-toggle="modal">Consultar Reservas</a></p> 
+                        
+                         <hr />
                         
                         <p>Añadir una reserva</p>
-                        <p><a href="#EliminarHuespedModal" role="button" class="btn btn-primary" data-toggle="modal">Añadir Reservas</a></p>
+                        <p><a href="#addReservaModal" role="button" class="btn btn-primary" data-toggle="modal">Añadir Reservas</a></p>
 
+                         <hr />
+                         
                         <p>Modificar datos de reservas </p>
-                        <p><a href="#EliminarHuespedModal" role="button" class="btn btn-primary" data-toggle="modal">Modificar Reserva</a></p> 
-                        
-                        <p>Elimina una reserva</p>
-                        <p><a href="#EliminarHuespedModal" role="button" class="btn btn-primary" data-toggle="modal">Eliminar Reserva</a></p> 
+                        <p><a href="#modReservaModal" role="button" class="btn btn-primary" data-toggle="modal">Modificar Reserva</a></p> 
 
-                        
-
+                         <hr />
+                         
+                        <p>Elimina una reserva <strong class="text-danger">Esta acción no se puede deshacer.</strong></p>
+                        <p><a href="#eliminarReservaModal" role="button" class="btn btn-primary" data-toggle="modal">Eliminar Reserva</a></p> 
 
                     </div>
 
@@ -314,6 +469,7 @@
         <br>
         <footer class="footer">
             <div class="container"> 
+                <br/>
                 <p class="text-muted center-block">Página web realizada por Manuel Gómez Pérez y Julio López González para Sistemas Distribuidos</p>
             </div>
         </footer>
