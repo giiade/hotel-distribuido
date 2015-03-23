@@ -5,7 +5,7 @@
  * Doble Grado GII + ADE
  * https://github.com/giiade/hotel-distribuido
  */
-package Servlet;
+package Servidor;
 
 import Helper.Huesped;
 import com.thoughtworks.xstream.XStream;
