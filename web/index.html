@@ -1,16 +1,327 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<html>
+
+<html lang="es">
     <head>
-        <title>jambo</title>
+        <title>HotelSD</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link href="css/footer.css" rel="stylesheet">
+        <style type="text/css"></style>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.1.0/bootstrap.min.js"></script>
+
+
     </head>
+
     <body>
-        <div>HOLA CARACOLA </div>
+
+
+        <!-- MODALES -->
+        <!-- MODAL NIF -->
+        <div id="cNifModal" class="modal fade" >
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <form method="GET" action=":8080/Hotel_SD/ServletWebApp">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">Consultar por NIF</h4>
+                        </div>
+                        <div class="modal-body">
+                            <input type="text" class="form-control" name='NIF' id="NIF" placeholder="SU NIF">
+                        </div>
+                        <div class="modal-footer">
+                            <input type="submit"   class="btn btn-success "/>
+                            <button type="button"  class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- MODAL NOMBRE -->
+        <div id="cNombreModal" class="modal fade" >
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <form method="GET" action="http://localhost:8080/Hotel_SD/ServletWebApp">
+
+                        <input type="hidden" name="parametro" value="ConsultaNombre"/>
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">Consultar por Nombre o apellido</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="name" class="col-sm-2 control-label">Name</label>
+                                <input type="text" class="form-control" name='nombre' placeholder="Nombre"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="name" class="col-sm-2 control-label">Apellidos</label>
+                                <input type="text" class="form-control" name='apellidos' placeholder="Apellidos"/>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="submit"   class="btn btn-success "/>
+                            <button type="button"  class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODAL ADD -->
+        <div id="AddHuespedModal" class="modal fade" >
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <form method="GET" action="http://localhost:8080/Hotel_SD/ServletWebApp">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">Añadir Huesped</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="modal-body">
+                                <label for="name" class="col-sm-2 control-label">NIF</label>
+                                <input type="text" class="form-control" name='NIF' id="NIF" placeholder="SU NIF">
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-sm-6">
+                                    <label for="name" class="col-sm-2 control-label">Nombre</label>
+                                    <input type="text" class="form-control" name='nombre' placeholder="Nombre"/>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label for="name" class="col-sm-2 control-label">Apellidos</label>
+                                    <input type="text" class="form-control" name='apellidos' placeholder="Apellidos"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-sm-6">
+                                    <label for="name" class="col-sm-2 control-label">Dirección</label>
+                                    <input type="text" class="form-control" name='direccion' placeholder="ej: calle Rio Cua"/>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label for="name" class="col-sm-2 control-label">Localidad</label>
+                                    <input type="text" class="form-control" name='localidad' placeholder="ej: Mostoles"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-sm-6">
+                                    <label for="name" class="col-sm-2 control-label">Provincia</label>
+                                    <input type="text" class="form-control" name='provincia' placeholder="ej: Madrid"/>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label for="name" class="control-label">Código Postal</label>
+                                    <input type="text" class="form-control" name='CP' placeholder="Código Postal"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-sm-6">
+                                    <label for="name" class="control-label">Fecha de nacimiento</label>
+                                    <input type="date" class="form-control" name='nacimiento' />
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label for="name" class="col-sm-2 control-label">Móvil</label>
+                                    <input type="tel" class="form-control" name='movil' placeholder="movil"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-sm-6">
+                                    <label for="name" class="col-sm-2 control-label">Fijo</label>
+                                    <input type="tel" class="form-control" name='fijo' placeholder="Fijo"/>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label for="name" class="col-sm-2 control-label">Mail</label>
+                                    <input type="email" class="form-control" name='mail' placeholder="xxxxx@hotelSD.com"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="submit"   class="btn btn-success "/>
+                            <button type="button"  class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!--MODAL Modificar Huesped-->
+        <div id="ModHuespedModal" class="modal fade" >
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <form method="GET" action="http://localhost:8080/Hotel_SD/ServletWebApp">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">Modificar Datos</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Introduzca el NIF del huesped</p>
+                            <div class="modal-body">
+                                <input type="text" class="form-control" name='NIF' id="NIF" placeholder="NIF del huesped">
+                            </div>
+                            <hr/>
+                            <p>Introduzca únicamente los atributos que desee cambiar.
+                                Deje en blanco el resto.</p>
+                            <div class="row">
+                                <div class="form-group col-sm-6">
+                                    <label for="name" class="col-sm-2 control-label">Nombre</label>
+                                    <input type="text" class="form-control" name='nombre' placeholder="Nombre"/>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label for="name" class="col-sm-2 control-label">Apellidos</label>
+                                    <input type="text" class="form-control" name='apellidos' placeholder="Apellidos"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-sm-6">
+                                    <label for="name" class="col-sm-2 control-label">Dirección</label>
+                                    <input type="text" class="form-control" name='direccion' placeholder="ej: calle Rio Cua"/>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label for="name" class="col-sm-2 control-label">Localidad</label>
+                                    <input type="text" class="form-control" name='localidad' placeholder="ej: Mostoles"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-sm-6">
+                                    <label for="name" class="col-sm-2 control-label">Provincia</label>
+                                    <input type="text" class="form-control" name='provincia' placeholder="ej: Madrid"/>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label for="name" class="control-label">Código Postal</label>
+                                    <input type="text" class="form-control" name='CP' placeholder="Código Postal"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-sm-6">
+                                    <label for="name" class="control-label">Fecha de nacimiento</label>
+                                    <input type="date" class="form-control" name='nacimiento' />
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label for="name" class="col-sm-2 control-label">Móvil</label>
+                                    <input type="tel" class="form-control" name='movil' placeholder="movil"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-sm-6">
+                                    <label for="name" class="col-sm-2 control-label">Fijo</label>
+                                    <input type="tel" class="form-control" name='fijo' placeholder="Fijo"/>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label for="name" class="col-sm-2 control-label">Mail</label>
+                                    <input type="email" class="form-control" name='mail' placeholder="xxxxx@hotelSD.com"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="submit"   class="btn btn-success "/>
+                            <button type="button"  class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Eliminar Modal -->
+        <div id="EliminarHuespedModal" class="modal fade" >
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <form method="GET" action="http://localhost:8080/Hotel_SD/ServletWebApp">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">Consultar por NIF</h4>
+                        </div>
+                        <div class="modal-body">
+                            <label for="name" class="col-sm-2 control-label">NIF</label>
+                            <input type="text" class="form-control" name='NIF' id="NIF" placeholder="NIF">
+                        </div>
+                        <div class="modal-footer">
+                            <input type="submit"   class="btn btn-success "/>
+                            <button type="button"  class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        
+
+
+
+        <div class="container">
+            <div class="container">
+                <div class="jumbotron">
+                    <h1>Hotel SD Main page</h1>
+                    <p>Seleccione una de las opciones</p>
+                </div>
+
+                <div class="row"  >
+
+                    <div class="col-sm-3 col-md-offset-2 ">
+                        <a id="Huespedes"></a>
+                        <h3>Huespedes</h3>
+
+                        <hr />
+
+                        <p>Consultar entre los huespedes por NIF</p>
+                        <p><a href="#cNifModal" role="button" class="btn btn-primary" data-toggle="modal">Consultar Por NIF</a></p> 
+                        
+                        <hr />
+
+                        <p>Consultar entre los huespedes por nombre o apellidos</p>
+                        <p><a href="#cNombreModal" role="button" class="btn btn-primary" data-toggle="modal">Consultar Por Nombre</a></p> 
+
+                        <hr />
+                        
+                        <p>Añadir un huesped nuevo a la lista</p>
+                        <p><a href="#AddHuespedModal" role="button" class="btn btn-primary" data-toggle="modal">Añadir Huesped</a></p> 
+
+                        <hr />
+                        
+                        <p>Modificar datos del huesped <strong>no se modificará el NIF</strong></p>
+                        <p><a href="#ModHuespedModal" role="button" class="btn btn-primary" data-toggle="modal">Modificar huesped</a></p> 
+
+                        <hr />
+                        
+                        <p>Eliminar huesped <strong>Esta acción no se puede deshacer.</strong></p>
+                        <p><a href="#EliminarHuespedModal" role="button" class="btn btn-primary" data-toggle="modal">Eliminar Huesped</a></p> 
+                        
+                        <hr />
+                    </div>
+
+
+                    <div class="col-sm-3 col-md-offset-1">
+                        <h3>Reservas</h3>
+                        <p>Dada una fecha consultar reservas</p>
+                        <p><a href="#EliminarHuespedModal" role="button" class="btn btn-primary" data-toggle="modal">Consultar Reservas</a></p> 
+                        
+                        <p>Añadir una reserva</p>
+                        <p><a href="#EliminarHuespedModal" role="button" class="btn btn-primary" data-toggle="modal">Añadir Reservas</a></p>
+
+                        <p>Modificar datos de reservas </p>
+                        <p><a href="#EliminarHuespedModal" role="button" class="btn btn-primary" data-toggle="modal">Modificar Reserva</a></p> 
+                        
+                        <p>Elimina una reserva</p>
+                        <p><a href="#EliminarHuespedModal" role="button" class="btn btn-primary" data-toggle="modal">Eliminar Reserva</a></p> 
+
+                        
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <br>
+        <br>
+        <footer class="footer">
+            <div class="container"> 
+                <p class="text-muted center-block">Página web realizada por Manuel Gómez Pérez y Julio López González para Sistemas Distribuidos</p>
+            </div>
+        </footer>
+
+
     </body>
+
+
+
+
 </html>
