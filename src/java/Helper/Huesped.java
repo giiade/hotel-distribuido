@@ -28,13 +28,6 @@ public class Huesped {
     
     @XStreamOmitField
     final private String LOG = this.getClass().getSimpleName();
-
-    //CONSTANTES --> Luego se meterán en una clase de constantes.
-    final static String DIR_KEY = "direccion";
-    final static String LOC_KEY = "localidad";
-    final static String MUN_KEY = "municipio";
-    final static String CP_KEY = "cp";
-
     //Variables
     private String nombre;
     private String apellidos;
@@ -200,10 +193,10 @@ public class Huesped {
      */
     public void setDomicilio(String direccion, String cp, String municipio, String localidad) {
         HashMap<String, String> hashmap = new HashMap<>();
-        hashmap.put(DIR_KEY, direccion);
-        hashmap.put(CP_KEY, cp);
-        hashmap.put(MUN_KEY, municipio);
-        hashmap.put(LOC_KEY, localidad);
+        hashmap.put(Constantes.ADDRESS_KEY, direccion);
+        hashmap.put(Constantes.CP_KEY, cp);
+        hashmap.put(Constantes.PROVINCIA_KEY, municipio);
+        hashmap.put(Constantes.LOCALIDAD_KEY, localidad);
         domicilio = hashmap;
     }
 
