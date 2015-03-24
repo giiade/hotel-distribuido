@@ -284,7 +284,7 @@ public class ServletWebApp extends HttpServlet {
                         String fecha = request.getParameter(Constantes.FENTRADA_KEY);
                         Date date;
                         try {
-                            date = Constantes.DATE_FORMAT.parse(fecha);
+                            date = Constantes.DATE_HTMLFORMAT.parse(fecha);
                         } catch (ParseException ex) {
                             respuesta = new ObjetoRespuesta(false, null, "Error al convertir fecha \"dd/MM/YYY\"");
                             break;
@@ -315,7 +315,7 @@ public class ServletWebApp extends HttpServlet {
                         String fEntrada = request.getParameter(Constantes.FENTRADA_KEY);
                         Date date;
                         try {
-                            date = Constantes.DATE_FORMAT.parse(fEntrada);
+                            date = Constantes.DATE_HTMLFORMAT.parse(fEntrada);
                         } catch (ParseException ex) {
                             respuesta = new ObjetoRespuesta(false, null, "Error al convertir fecha \"dd/MM/YYY\"");
                             break;
@@ -342,8 +342,8 @@ public class ServletWebApp extends HttpServlet {
                         String fSalida = request.getParameter(Constantes.FSALIDA_KEY);
                         Date dateE, dateS;
                         try {
-                            dateE = Constantes.DATE_FORMAT.parse(fEntrada);
-                            dateS = Constantes.DATE_FORMAT.parse(fSalida);
+                            dateE = Constantes.DATE_HTMLFORMAT.parse(fEntrada);
+                            dateS = Constantes.DATE_HTMLFORMAT.parse(fSalida);
                         } catch (ParseException ex) {
                             respuesta = new ObjetoRespuesta(false, null, "Error al convertir fecha \"dd/MM/YYY\"");
                             break;
@@ -369,7 +369,7 @@ public class ServletWebApp extends HttpServlet {
                         String fEntrada = request.getParameter(Constantes.FENTRADA_KEY);
                         Date date;
                         try {
-                            date = Constantes.DATE_FORMAT.parse(fEntrada);
+                            date = Constantes.DATE_HTMLFORMAT.parse(fEntrada);
                         } catch (ParseException ex) {
                             respuesta = new ObjetoRespuesta(false, null, "Error al convertir fecha \"dd/MM/YYY\"");
                             break;
@@ -440,12 +440,32 @@ public class ServletWebApp extends HttpServlet {
         }else{
             respuesta = new ObjetoRespuesta(false, null, "URL Malformada");
         }
+        
+        //Tratamos el objeto respuesta aquí y lo convertimos en un String que le pasaremos a la pagina web.
+        String htmlRes = "";
+        if(respuesta.getSuccess()){
+            if(respuesta.getObjeto() instanceof ArrayList){
+                ArrayList array = (ArrayList) respuesta.getObjeto();
+                if( array.get(0) instanceof Huesped){
+                    //Metodo para Guardar en un String el HTML de Imprimir Huespedes
+                }else{
+                    //Metodo para Guardar en un String el HTML de Imprimir Reservas
+                }
+            }else if(respuesta.getObjeto() instanceof Huesped){
+                Huesped huesped = (Huesped) respuesta.getObjeto();
+                htmlRes = printToHtml( huesped );
+            }
+        }else{
+            //Metodo para imprimir el error que recibimos
+        }
+        
 
         response.setContentType(
-                "application/xml;charset=UTF-8"); //Devolvemos un XML
+                "text/html;charset=UTF-8"); //Devolvemos un XML
         try (PrintWriter out = response.getWriter()) {
-            out.println(Constantes.XML_HEADER);
-            out.println(xstream.toXML(respuesta));
+            out.println(Constantes.HTML_HEADER);
+            out.println(htmlRes);
+            out.println(Constantes.HTML_FOOTER);
 
         }
 
@@ -569,5 +589,45 @@ public class ServletWebApp extends HttpServlet {
         }
         return reserva;
     }
+    
+    private String printToHtml(Huesped h){
+        
+        String nacimiento = Constantes.DATE_FORMAT.format(h.getNacimiento());
+        String salto = "\n";
+        String P = "<p>";
+        String noP = "</p>";
+        StringBuilder html = new StringBuilder();
+        html.append("<H4 class=\"text-center\"> Huesped </H4>").append(noP).append(salto);
+        html.append(P).append("NIF ->\t").append(h.getNif()).append(noP).append(salto);
+        html.append(P).append("Nombre ->\t").append(h.getNombre()).append(noP).append(salto);
+        html.append(P).append("Apellidos ->\t").append(h.getApellidos()).append(noP).append(salto);
+        html.append(P).append("F Nacimiento ->\t").append(nacimiento).append(noP).append(salto);
+        html.append(P).append("Correo ->\t").append(h.getCorreo()).append(noP).append(salto);
+        html.append(P).append("Móvil ->\t").append(h.getMovil()).append(noP).append(salto);
+        html.append(P).append("Fijo ->\t").append(h.getFijo()).append(noP).append(salto);
+        
+        html.append("<address>").append("<strong>").append("Direccion").append("</strong>")
+                .append("<BR/>").append(salto)
+                .append(h.getDomicilio().get(Constantes.ADDRESS_KEY) + ", ").append(salto)
+                .append(h.getDomicilio().get(Constantes.LOCALIDAD_KEY) + ", ")
+                .append(h.getDomicilio().get(Constantes.PROVINCIA_KEY) + ", ")
+                .append(h.getDomicilio().get(Constantes.CP_KEY)).append(salto)
+                .append("</address>").append(salto);
+        
+        
+        
+        return html.toString();
+        
+    }
+    
+    private String printToHtml(ArrayList<Reserva> listaR){
+        StringBuilder html = new StringBuilder();
+        
+        return html.toString();
+    }
+    
+//    private String prinToHtml(ArrayList<Huesped>){
+//        
+//    }
 
 }
