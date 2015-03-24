@@ -227,13 +227,30 @@ public class Huesped {
     public String toString() {
         StringBuilder resultado = new StringBuilder();
         String coma = ", ";
-        resultado.append(this.nombre).append(coma);
-        resultado.append(this.apellidos).append(coma);
-        if (!domicilio.isEmpty()) {
-            resultado.append(this.domicilio.get("direccion"));
+        String punto= ".";
+        String newline = "\n";
+        resultado.append("Datos del Huesped: ").append(newline);
+        resultado.append("  Nombre: " ).append(this.nombre).append(punto).append(newline);
+        resultado.append("  Apellidos: " ).append(this.apellidos).append(punto).append(newline);
+        resultado.append("  Fecha de nacimiento: ").append(this.nacimiento).append(punto).append(newline);
+        resultado.append("  NIF: ").append(this.nif).append(punto).append(newline);
+        resultado.append("  Dirección: ").append(this.domicilio.get("direccion")).append(coma).append(this.domicilio.get("municipio")).append(coma).append(this.domicilio.get("cp")).append(coma).append(this.domicilio.get("localidad")).append(punto).append(newline);
+        if (this.fijo != null) {
+            resultado.append("  Fijo: ").append(this.fijo).append(punto).append(newline);
         } else {
-            resultado.append("No hay domicilio registrado");
+            resultado.append("  No hay número de fijo registrado").append(newline);
         }
+        if (this.movil !=null) {
+            resultado.append("  Móvil: ").append(this.movil).append(punto).append(newline);
+        } else {
+            resultado.append("  No hay número de fijo registrado").append(punto).append(newline);
+        }
+        if (this.correo != null) {
+            resultado.append("  Correo: ").append(this.correo).append(punto).append(newline);
+        } else {
+            resultado.append("  No hay dirección de correo electrónico registrada").append(punto).append(newline);
+        }
+        
 
         return resultado.toString();
 
