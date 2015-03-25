@@ -56,15 +56,13 @@ public class ServletWebApp extends HttpServlet {
         reservas.add(reserva);
         reservasCliente.put(reserva.getNIF(), reservas);
 
+        //Anotaciones Xstream
         xstream.alias("huesped", Huesped.class);
         xstream.alias("reserva", Reserva.class);
         xstream.alias("Respuesta", ObjetoRespuesta.class);
         xstream.autodetectAnnotations(true);
 
-        //Obtenemos la dirección relativa para guardar un archivo persistente de 
-        //datos.
-        ServletContext sc = getServletContext();
-        String Hola = sc.getRealPath("files");
+       
 
     }
 
