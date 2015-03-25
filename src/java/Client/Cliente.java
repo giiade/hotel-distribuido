@@ -107,7 +107,7 @@ public class Cliente {
 
     private static String encode(String dato) {
         try {
-            dato = URLEncoder.encode(dato, "UTF-8");
+            dato = URLEncoder.encode(dato, "ISO-8859-1");
         } catch (UnsupportedEncodingException ex) {
             Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -389,14 +389,15 @@ public class Cliente {
             String fechaEntrada = teclado.nextLine();
             System.out.println("  Introduzca la fecha de salida modificada");
             String fechaSalida = teclado.nextLine();
-            if (fechaEntrada.length() > 0) {
-                entradaMod = "operacion=ModificarReservas/cambiarFentrada&entrada=" + fechaEntradaOrig + "&NIF=" + nif+"&newEntrada="+fechaEntrada;
-                modificacion(entradaMod);
-            } 
+            
             if (fechaSalida.length() > 0) {
-                entradaMod = "operacion=ModificarReservas/cambiarFsalida&salida=" + fechaSalida +"&entrada"+fechaEntradaOrig+ "&NIF=" + nif;
+                entradaMod = "operacion=ModificarReservas/cambiarFsalida&salida=" + fechaSalida +"&" + Constantes.FOENTRADA_KEY+ "=" +fechaEntradaOrig+ "&NIF=" + nif;
                 modificacion(entradaMod);
             }
+            if (fechaEntrada.length() > 0) {
+                entradaMod = "operacion=ModificarReservas/cambiarFentrada&" + Constantes.FOENTRADA_KEY + "=" + fechaEntradaOrig + "&NIF=" + nif+"&" + Constantes.FENTRADA_KEY + "="+fechaEntrada;
+                modificacion(entradaMod);
+            } 
         }
     }
 
