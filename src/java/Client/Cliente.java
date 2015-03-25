@@ -35,12 +35,13 @@ public class Cliente {
     static SimpleDateFormat formatoDeFecha = Constantes.DATE_FORMAT;
     static String entradaMod;
     /**
-     *  Realiza consultas al servidor
+     *  Realiza consultas al servidor.
+     * 
      * @param entrada (GET) 
      * @return devuelve valor cierto si la entrada a consultar se encuentra en el servidor,
      *      falso en caso contrario
      */
-    private static boolean consulta(String entrada) {
+    public static boolean consulta(String entrada) {
         URL url;
         HttpURLConnection conexion;
         boolean consulta = false;
@@ -92,10 +93,11 @@ public class Cliente {
     /**
      * Realiza modificaciones(incluidas eliminaciones) a los datos
      * que se encuentran en el servidor
+     * 
      * @param entrada (POST)
      * @throws IOException 
      */
-    private static void modificacion(String entrada) throws IOException {
+    public static void modificacion(String entrada) throws IOException {
         URL url;
         HttpURLConnection conexion;
         String ruta = Constantes.POST_KEY;
@@ -130,6 +132,7 @@ public class Cliente {
     }
     /**
      * Codifica el texto introducido a UTF-8
+     * 
      * @param dato 
      * @return string con 'dato' en UTF-8
      */
@@ -145,7 +148,7 @@ public class Cliente {
      * Comprueba que la fecha introducida tenga el formato (dd/MM/yyyy)
      * @return fecha con formato válido 
      */
-    private static String comprobarFecha() {
+    public static String comprobarFecha() {
         String fecha;
         do {
             System.out.println("    Introduce la fecha (formato dd/MM/yyyy)");
@@ -164,7 +167,7 @@ public class Cliente {
      * @return el resultado de la llamada a consultarHuesped(nif)
      * @throws IOException 
      */
-    private static boolean consultarHuesped() throws IOException {
+    public static boolean consultarHuesped() throws IOException {
         System.out.println("Opción 1. Consultar huésped");
         String nif;
         boolean check;
@@ -185,7 +188,7 @@ public class Cliente {
      *      falso en caso contrario
      * @throws IOException 
      */
-    private static boolean consultarHuesped(String nif) throws IOException {
+    public static boolean consultarHuesped(String nif) throws IOException {
 
         boolean check = false;
 
@@ -225,7 +228,7 @@ public class Cliente {
      * eliminarlo o modificarlo
      * @throws IOException 
      */
-    private static void consultarHuespedApe() throws IOException {
+    public static void consultarHuespedApe() throws IOException {
         boolean check = false;
         System.out.println("Opción 2. Consultar huésped");
         System.out.println("  Introduzca los apellidos del huésped que desea consultar. Pulse intro sin introducir nada si desea buscar sólo por nombre");
@@ -290,7 +293,7 @@ public class Cliente {
      * con estos datos
      * @throws IOException 
      */
-    private static void anadirHuesped() throws IOException {
+    public static void anadirHuesped() throws IOException {
         System.out.println("Opción 3. Añadir huésped");
         String nifhuesped;
         do {
@@ -306,7 +309,7 @@ public class Cliente {
      * @param nifhuesped
      * @throws IOException 
      */
-    private static void anadirHuesped(String nifhuesped) throws IOException {
+    public static void anadirHuesped(String nifhuesped) throws IOException {
 
         String nombrehuesped, apellidoshuesped, nacHuesped, dirhuesped, localhuesped, CPhuesped, provinciaHuesped;
         do {
@@ -355,7 +358,7 @@ public class Cliente {
      * parámetro de entrada. Realiza una llamada a modificacion(entrada) con estos datos
      * @throws IOException 
      */
-    private static void modHuesped() throws IOException {
+    public static void modHuesped() throws IOException {
         System.out.println("  Introduzca el NIF del huésped que desea modificar");
         String nif = teclado.nextLine();
         modHuesped(nif);
@@ -367,7 +370,7 @@ public class Cliente {
      * @param nif
      * @throws IOException 
      */
-    private static void modHuesped(String nif) throws IOException {
+    public static void modHuesped(String nif) throws IOException {
         System.out.println("     Modificar datos del huésped");
         System.out.println("Introduzca todos los datos. Cambie aquellos que desea modificar");
         String nombrehuesped, apellidoshuesped, nacHuesped, dirhuesped, localhuesped, CPhuesped, provinciaHuesped;
@@ -430,7 +433,7 @@ public class Cliente {
      * Solicita un NIF al usuario, el cual será usado para llamar a delHuesped(nif)
      * @throws IOException 
      */
-    private static void delHuesped() throws IOException {
+    public static void delHuesped() throws IOException {
         System.out.println("  Introduzca el NIF del huésped que desea eliminar");
         String nif = teclado.nextLine();
         delHuesped(nif);
@@ -440,7 +443,7 @@ public class Cliente {
      * @param nif
      * @throws IOException 
      */
-    private static void delHuesped(String nif) throws IOException {
+    public static void delHuesped(String nif) throws IOException {
         System.out.println("    Eliminar datos del huésped");
         entradaMod = "operacion=ModificarHuesped/Eliminar&NIF=" + nif;
         modificacion(entradaMod);
@@ -449,7 +452,7 @@ public class Cliente {
      * Realiza una consulta al servidor con una fecha introducida por el usuario.
      * Muestra la lista de reservas que tienen dicha fecha como fecha de entrada.
      */
-    private static void buscaReserva() {
+    public static void buscaReserva() {
         System.out.println("Opción 6. Buscar reservas por fecha de entrada");
         String fecha = comprobarFecha();
         entradaConsulta = ("ConsultarReservas&entrada=" + fecha);
@@ -461,7 +464,7 @@ public class Cliente {
      * modificacion(entrada)
      * @throws IOException 
      */
-    private static void modReserva() throws IOException {
+    public static void modReserva() throws IOException {
         System.out.println("Opción 7. Modificar reserva");
         System.out.println("  Introduzca el NIF del huésped cuya reserva desea modificar");
         String nif = teclado.nextLine();
@@ -490,7 +493,7 @@ public class Cliente {
      * con esos datos.
      * @throws IOException 
      */
-    private static void delReserva() throws IOException {
+    public static void delReserva() throws IOException {
         System.out.println("Opción 8. Eliminar reserva");
         System.out.println("  Introduzca el NIF del huésped cuya reserva desea eliminar");
         String nif = teclado.nextLine();
@@ -507,7 +510,7 @@ public class Cliente {
      * Si el NIF no se encuentra registrado, permite añadir un nuevo huésped con una llamada a anadirHuesped(nif);
      * @throws IOException 
      */
-    private static void anadirReserva() throws IOException {
+    public static void anadirReserva() throws IOException {
         boolean check = false;
         System.out.println("Opción 9. Añadir reserva");
         System.out.println("  Introduzca el NIF del huésped a cuyo nombre estará la reserva");

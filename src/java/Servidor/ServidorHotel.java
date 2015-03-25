@@ -42,7 +42,7 @@ public class ServidorHotel extends HttpServlet {
     /**
      * Initilizes the servlet with config file and saved data if it exist
      *
-     * @param config -> Configuration of server
+     * @param config Configuration of server
      * @throws ServletException
      */
     @Override
@@ -516,7 +516,7 @@ public class ServidorHotel extends HttpServlet {
      * @return devuelve el valor True si el NIF no está en el servidor, False en
      * caso contrario.
      */
-    private boolean compruebaNif(String nif) {
+    public boolean compruebaNif(String nif) {
         for (Huesped h : huespedes) {
             if (h.getNif().equals(nif)) {
                 return false;
@@ -532,7 +532,7 @@ public class ServidorHotel extends HttpServlet {
      * @return Huesped en caso de encontrarlo, null en caso de que no lo
      * encuentre.
      */
-    private Huesped getHuesped(String nif) {
+    public Huesped getHuesped(String nif) {
         Huesped huesped = null;
         for (Huesped h : huespedes) {
             if (h.getNif().equals(nif)) {
@@ -548,7 +548,7 @@ public class ServidorHotel extends HttpServlet {
      * @param date la fecha en formato "dd/MM/YYYY"
      * @return true si encuentra la fecha, false en caso contrario.
      */
-    private Boolean ComprobarFecha(String id, Date date) {
+    public Boolean ComprobarFecha(String id, Date date) {
         for (Reserva r : reservasCliente.get(id)) {
             //Recorremos todas las reservas realizadas por un DNI
             if (r.getfEntrada().equals(date)) {
@@ -566,7 +566,7 @@ public class ServidorHotel extends HttpServlet {
      * @param fEntrada Fecha de entrada en formato "dd/MM/YYYY"
      * @return Objeto reserva con la reserva o null.
      */
-    private Reserva getReserva(String id, Date fEntrada) {
+    public Reserva getReserva(String id, Date fEntrada) {
         Reserva reserva = null;
         for (Reserva r : reservasCliente.get(id)) {
             //Recorremos todas las reservas realizadas por un DNI

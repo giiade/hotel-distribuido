@@ -42,7 +42,7 @@ public class ServletWebApp extends HttpServlet {
     /**
      * Initilizes the servlet with config file and saved data if it exist
      *
-     * @param config -> Configuration of server
+     * @param config Configuration of server
      * @throws ServletException
      */
     @Override
@@ -542,7 +542,7 @@ public class ServletWebApp extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }
 
     /**
      * Comprueba si existe el NIF en el servidor.
@@ -551,7 +551,7 @@ public class ServletWebApp extends HttpServlet {
      * @return devuelve el valor True si el NIF no está en el servidor, False en
      * caso contrario.
      */
-    private boolean compruebaNif(String nif) {
+    public boolean compruebaNif(String nif) {
         for (Huesped h : huespedes) {
             if (h.getNif().equals(nif)) {
                 return false;
@@ -567,7 +567,7 @@ public class ServletWebApp extends HttpServlet {
      * @return Huesped en caso de encontrarlo, null en caso de que no lo
      * encuentre.
      */
-    private Huesped getHuesped(String nif) {
+    public Huesped getHuesped(String nif) {
         Huesped huesped = null;
         for (Huesped h : huespedes) {
             if (h.getNif().equals(nif)) {
@@ -583,7 +583,7 @@ public class ServletWebApp extends HttpServlet {
      * @param date la fecha en formato "dd/MM/YYYY"
      * @return true si encuentra la fecha, false en caso contrario.
      */
-    private Boolean ComprobarFecha(String id, Date date) {
+    public Boolean ComprobarFecha(String id, Date date) {
         for (Reserva r : reservasCliente.get(id)) {
             //Recorremos todas las reservas realizadas por un DNI
             if (r.getfEntrada().equals(date)) {
@@ -601,7 +601,7 @@ public class ServletWebApp extends HttpServlet {
      * @param fEntrada Fecha de entrada en formato "dd/MM/YYYY"
      * @return Objeto reserva con la reserva o null.
      */
-    private Reserva getReserva(String id, Date fEntrada) {
+    public Reserva getReserva(String id, Date fEntrada) {
         Reserva reserva = null;
         for (Reserva r : reservasCliente.get(id)) {
             //Recorremos todas las reservas realizadas por un DNI
@@ -614,10 +614,11 @@ public class ServletWebApp extends HttpServlet {
 
     /**
      * Método para devolver un String que contendrá el formato HTML aplicado a lo que reciba como entrada
+     * 
      * @param h Un huesped
      * @return String con formato HTML que contendrá toda la información de Huesped.
      */
-    private String printToHtml(Huesped h) {
+    public String printToHtml(Huesped h) {
 
         String nacimiento = Constantes.DATE_FORMAT.format(h.getNacimiento());
         String salto = "\n";
@@ -647,10 +648,11 @@ public class ServletWebApp extends HttpServlet {
 
     /**
      * Método para devolver un String que contendrá el formato HTML aplicado a lo que reciba como entrada
+     * 
      * @param listaH Lista de huéspedes
      * @return String con formato HTML que contendrá la lista de huéspedes.
      */
-    private String printToHtml(ArrayList<Huesped> listaH) {
+    public String printToHtml(ArrayList<Huesped> listaH) {
         StringBuilder html = new StringBuilder();
         String salto = "\n";
         html.append("<H4 class=\"text-center\"> Huesped </H4>").append(salto);
@@ -704,10 +706,11 @@ public class ServletWebApp extends HttpServlet {
 
     /**
      * Método para devolver un String que contendrá el formato HTML aplicado a lo que reciba como entrada
+     * 
      * @param listaR Lista de reservas
      * @return  String con formato HTML para imprimir la lista de reservas recibida
      */
-    private String prinToHtml(ArrayList<Reserva> listaR) {
+    public String prinToHtml(ArrayList<Reserva> listaR) {
         StringBuilder html = new StringBuilder();
         String salto = "\n";
         html.append("<H4 class=\"text-center\"> Reserva </H4>").append(salto);
@@ -751,11 +754,12 @@ public class ServletWebApp extends HttpServlet {
 
     /**
      * Método para devolver un String que contendrá el formato HTML aplicado a lo que reciba como entrada
+     * 
      * @param s String mensaje 
      * @param success Si la consulta es válida true, si es inválida false.
      * @return  String con formato HTML con el mensaje recibido.
      */
-    private String prinToHtml(String s, boolean success) {
+    public String prinToHtml(String s, boolean success) {
         String salto = "\n";
         String P = "<p class=\"text-center\">";
         String noP = "</p>";
