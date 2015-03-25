@@ -20,6 +20,11 @@ import java.util.logging.Logger;
 import java.util.ArrayList;
 
 
+
+/**
+ * Clase cliente, es la aplicación cliente que se comunicara con el servidor desde el ordenador
+ * @author Julio Lopez, Manuel Gomez
+ */
 public class Cliente {
     // Variables globales
     static XStream xstream = new XStream();

@@ -7,11 +7,8 @@
  */
 package Servidor;
 
-import Helper.Huesped;
-import com.thoughtworks.xstream.XStream;
-
 /**
- *
+ * Esta clase contiene el objeto respuesta que mandaremos desde el servidor.
  * @author JulioLopez
  */
 public class ObjetoRespuesta {
@@ -27,9 +24,18 @@ public class ObjetoRespuesta {
             
     private String error;
 
+    /**
+     * Constructor vacio de ObjetoRespuesta
+     */
     public ObjetoRespuesta() {
     }
 
+    /**
+     *
+     * @param success
+     * @param o 
+     * @param error
+     */
     public ObjetoRespuesta(Boolean success, Object o, String error) {
         this.success = success;
         //this.Type = Type;
