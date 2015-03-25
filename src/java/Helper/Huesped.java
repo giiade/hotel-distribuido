@@ -49,7 +49,11 @@ public class Huesped {
         try {
             this.nacimiento = Constantes.DATE_FORMAT.parse(nacimiento);
         } catch (ParseException ex) {
-            Logger.getLogger(Huesped.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+                this.nacimiento = Constantes.DATE_HTMLFORMAT.parse(nacimiento);
+            } catch (ParseException ex1) {
+                Logger.getLogger(Huesped.class.getName()).log(Level.SEVERE, null, ex1);
+            }
         }
         this.setDomicilio(direccion, cp, localidad, municipio);
         this.fijo = fijo;
@@ -137,7 +141,12 @@ public class Huesped {
         try {
             this.nacimiento = Constantes.DATE_FORMAT.parse(nacimiento);
         } catch (ParseException ex) {
-            Logger.getLogger(LOG).log(Level.SEVERE, "Error parseando Constructor Vacio \n{0}", ex.getMessage());
+            try {
+                this.nacimiento = Constantes.DATE_HTMLFORMAT.parse(nacimiento);
+            } catch (ParseException ex1) {
+                Logger.getLogger(LOG).log(Level.SEVERE, "Error parseando Constructor Vacio \n{0}", ex.getMessage());
+            }
+            
         }
     }
 

@@ -45,9 +45,15 @@ public class Reserva {
     public Reserva(String NIF, int habitacionId, String fEntrada, String fSalida) throws ParseException {
         this.NIF = NIF;
         this.habitacionId = habitacionId;
-        
+        if(fEntrada.contains("-")){
+            this.fEntrada = Constantes.DATE_HTMLFORMAT.parse(fEntrada);
+            this.fSalida = Constantes.DATE_HTMLFORMAT.parse(fSalida);
+        }else{
             this.fEntrada = Constantes.DATE_FORMAT.parse(fEntrada);
             this.fSalida = Constantes.DATE_FORMAT.parse(fSalida);
+        }
+        
+            
        
             
         

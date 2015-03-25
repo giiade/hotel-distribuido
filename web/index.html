@@ -3,7 +3,7 @@
 <html lang="es">
     <head>
         <title>HotelSD</title>
-        <meta charset="UTF-8">
+        <meta charset="ISO-8859-1">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
         <link href="css/footer.css" rel="stylesheet">
@@ -24,15 +24,15 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <form method="GET" action="/Hotel_SD/ServletWebApp">
-                        
+
                         <input type="hidden" name ="operacion" value="ConsultaNIF"/>
-                        
+
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                             <h4 class="modal-title">Consultar por NIF</h4>
                         </div>
                         <div class="modal-body">
-                            
+
                             <input type="text" class="form-control" name='NIF' id="NIF" placeholder="SU NIF">
                         </div>
                         <div class="modal-footer">
@@ -78,11 +78,11 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <form method="POST" action="http://localhost:8080/Hotel_SD/ServletWebApp">
-                        
+
                         <input type="hidden" name ="operacion" value="AddHuesped"/>
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title">AÃ±adir Huesped</h4>
+                            <h4 class="modal-title">Añadir Huesped</h4>
                         </div>
                         <div class="modal-body">
                             <div class="modal-body">
@@ -101,7 +101,7 @@
                             </div>
                             <div class="row">
                                 <div class="form-group col-sm-6">
-                                    <label for="name" class="col-sm-2 control-label">DirecciÃ³n</label>
+                                    <label for="name" class="col-sm-2 control-label">Dirección</label>
                                     <input type="text" class="form-control" name='direccion' placeholder="ej: calle Rio Cua"/>
                                 </div>
                                 <div class="form-group col-sm-6">
@@ -115,8 +115,8 @@
                                     <input type="text" class="form-control" name='provincia' placeholder="ej: Madrid"/>
                                 </div>
                                 <div class="form-group col-sm-6">
-                                    <label for="name" class="control-label">CÃ³digo Postal</label>
-                                    <input type="text" class="form-control" name='CP' placeholder="CÃ³digo Postal"/>
+                                    <label for="name" class="control-label">Código Postal</label>
+                                    <input type="text" class="form-control" name='CP' placeholder="Código Postal"/>
                                 </div>
                             </div>
                             <div class="row">
@@ -125,7 +125,7 @@
                                     <input type="date" class="form-control" name='nacimiento' />
                                 </div>
                                 <div class="form-group col-sm-6">
-                                    <label for="name" class="col-sm-2 control-label">MÃ³vil</label>
+                                    <label for="name" class="col-sm-2 control-label">Móvil</label>
                                     <input type="tel" class="form-control" name='movil' placeholder="movil"/>
                                 </div>
                             </div>
@@ -154,7 +154,7 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <form method="POST" action="http://localhost:8080/Hotel_SD/ServletWebApp">
-                        <input type="hidden" name ="operacion" value="ConsultaNIF"/>
+                        <input type="hidden" name ="operacion" value="ModificarHuesped"/>
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                             <h4 class="modal-title">Modificar Datos</h4>
@@ -165,7 +165,7 @@
                                 <input type="text" class="form-control" name='NIF' id="NIF" placeholder="NIF del huesped">
                             </div>
                             <hr/>
-                            <p>Introduzca Ãºnicamente los atributos que desee cambiar.
+                            <p>Introduzca únicamente los atributos que desee cambiar.
                                 Deje en blanco el resto.</p>
                             <div class="row">
                                 <div class="form-group col-sm-6">
@@ -179,7 +179,7 @@
                             </div>
                             <div class="row">
                                 <div class="form-group col-sm-6">
-                                    <label for="name" class="col-sm-2 control-label">DirecciÃ³n</label>
+                                    <label for="name" class="col-sm-2 control-label">Dirección</label>
                                     <input type="text" class="form-control" name='direccion' placeholder="ej: calle Rio Cua"/>
                                 </div>
                                 <div class="form-group col-sm-6">
@@ -193,8 +193,8 @@
                                     <input type="text" class="form-control" name='provincia' placeholder="ej: Madrid"/>
                                 </div>
                                 <div class="form-group col-sm-6">
-                                    <label for="name" class="control-label">CÃ³digo Postal</label>
-                                    <input type="text" class="form-control" name='CP' placeholder="CÃ³digo Postal"/>
+                                    <label for="name" class="control-label">Código Postal</label>
+                                    <input type="text" class="form-control" name='CP' placeholder="Código Postal"/>
                                 </div>
                             </div>
                             <div class="row">
@@ -203,7 +203,7 @@
                                     <input type="date" class="form-control" name='nacimiento' />
                                 </div>
                                 <div class="form-group col-sm-6">
-                                    <label for="name" class="col-sm-2 control-label">MÃ³vil</label>
+                                    <label for="name" class="col-sm-2 control-label">Móvil</label>
                                     <input type="tel" class="form-control" name='movil' placeholder="movil"/>
                                 </div>
                             </div>
@@ -231,7 +231,7 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <form method="POST" action="http://localhost:8080/Hotel_SD/ServletWebApp">
-                        <input type="hidden" name ="operacion" value="ModificarHuesped/Eliminar"/>
+                        <input type="hidden" name ="operacion" value="EliminarHuesped"/>
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                             <h4 class="modal-title">Consultar por NIF</h4>
@@ -263,7 +263,7 @@
                         </div>
                         <div class="modal-body">
                             <p>Introduzca la fecha de entrada para obtener todas las habitaciones 
-                                registradas a ese dÃ­a</p>
+                                registradas a ese día</p>
                             <label form="name" class="control-label">Fecha de entrada</label>
                             <input type="date" class="form-control" name='entrada' id="entrada"/>
                         </div>
@@ -276,7 +276,7 @@
             </div>
         </div>
 
-        <!-- AÃ±adir Reserva -->
+        <!-- Añadir Reserva -->
         <div id="addReservaModal" class="modal fade" >
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
@@ -319,7 +319,7 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <form method="GET" action="http://localhost:8080/Hotel_SD/ServletWebApp">
-                        <input type="hidden" name ="operacion" value="ModificarHuesped/Eliminar"/>
+                        <input type="hidden" name ="operacion" value="ModificarReservas"/>
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                             <h4 class="modal-title">Modificar Datos</h4>
@@ -329,6 +329,9 @@
                             <div class="modal-body">
                                 <label form="name" class="col-sm-6 control-label">NIF</label>
                                 <input type="text" class="form-control" name='NIF' id="NIF" placeholder="NIF del huesped">
+                                <label form="name" class="col-sm-6 control-label">Fecha de entrada</label>
+                                <input type="date" class="form-control" name='entradaO'/>
+
                             </div>
                             <hr/>
                             <p class="text-info">Introduzca la fecha que quiere cambiar.
@@ -336,11 +339,11 @@
                                 que no quiere cambiar</p>
                             <div class="row">
                                 <div class="form-group col-sm-6">
-                                    <label form="name" class="col-sm-6 control-label">Fecha de entrada</label>
+                                    <label form="name" class="col-sm-6 control-label">Nueva Fecha de entrada</label>
                                     <input type="date" class="form-control" name='entrada'/>
                                 </div>
                                 <div class="form-group col-sm-6">
-                                    <label form="name" class="col-sm-6 control-label">Fecha de salida</label>
+                                    <label form="name" class="col-sm-6 control-label">Nueva Fecha de salida</label>
                                     <input type="date" class="form-control" name='salida' />
                                 </div>
                             </div>
@@ -354,12 +357,12 @@
             </div>
         </div>
         <!-- Eliminar Reserva -->
-        
+
         <div id="eliminarReservaModal" class="modal fade">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <form method="GET" action="http://localhost:8080/Hotel_SD/ServletWebApp">
-                        <input type="hidden" name ="operacion" value="ModificarReservas/EliminarReserva"/>
+                        <input type="hidden" name ="operacion" value="EliminarReserva"/>
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                             <h4 class="modal-title">Modificar Datos</h4>
@@ -387,7 +390,7 @@
                 </div>
             </div>
         </div>
-        
+
 
 
 
@@ -419,44 +422,44 @@
 
                         <hr />
 
-                        <p>AÃ±adir un huesped nuevo a la lista</p>
-                        <p><a href="#AddHuespedModal" role="button" class="btn btn-primary" data-toggle="modal">AÃ±adir Huesped</a></p> 
+                        <p>Añadir un huesped nuevo a la lista</p>
+                        <p><a href="#AddHuespedModal" role="button" class="btn btn-primary" data-toggle="modal">Añadir Huesped</a></p> 
 
                         <hr />
 
-                        <p>Modificar datos del huesped <strong>no se modificarÃ¡ el NIF</strong></p>
+                        <p>Modificar datos del huesped <strong>no se modificará el NIF</strong></p>
                         <p><a href="#ModHuespedModal" role="button" class="btn btn-primary" data-toggle="modal">Modificar huesped</a></p> 
 
                         <hr />
 
-                        <p>Eliminar huesped <strong class="text-danger">Esta acciÃ³n no se puede deshacer.</strong></p>
+                        <p>Eliminar huesped <strong class="text-danger">Esta acción no se puede deshacer.</strong></p>
                         <p><a href="#EliminarHuespedModal" role="button" class="btn btn-primary" data-toggle="modal">Eliminar Huesped</a></p> 
 
-                       
+
                     </div>
 
 
                     <div class="col-sm-3 col-md-offset-1">
                         <h3>Reservas</h3>
-                        
-                         <hr />
-                         
+
+                        <hr />
+
                         <p>Dada una fecha consultar reservas</p>
                         <p><a href="#cReservasModal" role="button" class="btn btn-primary" data-toggle="modal">Consultar Reservas</a></p> 
-                        
-                         <hr />
-                        
-                        <p>AÃ±adir una reserva</p>
-                        <p><a href="#addReservaModal" role="button" class="btn btn-primary" data-toggle="modal">AÃ±adir Reservas</a></p>
 
-                         <hr />
-                         
+                        <hr />
+
+                        <p>Añadir una reserva</p>
+                        <p><a href="#addReservaModal" role="button" class="btn btn-primary" data-toggle="modal">Añadir Reservas</a></p>
+
+                        <hr />
+
                         <p>Modificar datos de reservas </p>
                         <p><a href="#modReservaModal" role="button" class="btn btn-primary" data-toggle="modal">Modificar Reserva</a></p> 
 
-                         <hr />
-                         
-                        <p>Elimina una reserva <strong class="text-danger">Esta acciÃ³n no se puede deshacer.</strong></p>
+                        <hr />
+
+                        <p>Elimina una reserva <strong class="text-danger">Esta acción no se puede deshacer.</strong></p>
                         <p><a href="#eliminarReservaModal" role="button" class="btn btn-primary" data-toggle="modal">Eliminar Reserva</a></p> 
 
                     </div>
@@ -470,7 +473,7 @@
         <footer class="footer">
             <div class="container"> 
                 <br/>
-                <p class="text-muted center-block">PÃ¡gina web realizada por Manuel GÃ³mez PÃ©rez y Julio LÃ³pez GonzÃ¡lez para Sistemas Distribuidos</p>
+                <p class="text-muted center-block">Página web realizada por Manuel Gómez Pérez y Julio López González para Sistemas Distribuidos</p>
             </div>
         </footer>
 

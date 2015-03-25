@@ -73,7 +73,7 @@ public class Constantes {
             + "            <div class=\"page-header\">\n"
             + "                <h1> Resultado </h1>\n"
             + "            </div>\n"
-            + "<div class=\"col-sm-4 col-md-offset-4\">";
+            + "<div class=\"col-sm-12\">";
 
     public static final String HTML_FOOTER = "</div>\n"
             + "        </div>\n"

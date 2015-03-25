@@ -214,10 +214,10 @@ public class ServidorHotel extends HttpServlet {
                             respuesta = new ObjetoRespuesta(true, "Nombre Cambiado con exito", "");
 
                         } else {
-                            respuesta = new ObjetoRespuesta(true, null, "No se encuentra el DNI");
+                            respuesta = new ObjetoRespuesta(false, null, "No se encuentra el DNI");
                         }
                     } else {
-                        respuesta = new ObjetoRespuesta(true, null, "URL mal formada");
+                        respuesta = new ObjetoRespuesta(false, null, "URL mal formada");
                     }
                     break;
                 case "ModificarHuesped/CambiarDomicilio":
@@ -236,7 +236,7 @@ public class ServidorHotel extends HttpServlet {
                             respuesta = new ObjetoRespuesta(false, null, "No se encuentra el DNI");
                         }
                     } else {
-                        respuesta = new ObjetoRespuesta(true, null, "URL mal formada");
+                        respuesta = new ObjetoRespuesta(false, null, "URL mal formada");
                     }
                     break;
                 case "ModificarHuesped/CambiarNacimiento":
@@ -249,10 +249,10 @@ public class ServidorHotel extends HttpServlet {
                             h.setNacimiento(nacimiento);
                             respuesta = new ObjetoRespuesta(true, "Fecha de nacimiento cambiada con exito", "");
                         } else {
-                            respuesta = new ObjetoRespuesta(true, null, "No se encuentra el DNI");
+                            respuesta = new ObjetoRespuesta(false, null, "No se encuentra el DNI");
                         }
                     } else {
-                        respuesta = new ObjetoRespuesta(true, null, "URL mal formada");
+                        respuesta = new ObjetoRespuesta(false, null, "URL mal formada");
                     }
                     break;
                 case "ModificarHuesped/CambiarOpcional":
@@ -269,10 +269,10 @@ public class ServidorHotel extends HttpServlet {
                             h.setFijo(fijo);
                             respuesta = new ObjetoRespuesta(true, "Parametros opcionales actualizados con exito", "");
                         } else {
-                            respuesta = new ObjetoRespuesta(true, null, "No se encuentra el DNI");
+                            respuesta = new ObjetoRespuesta(false, null, "No se encuentra el DNI");
                         }
                     } else {
-                        respuesta = new ObjetoRespuesta(true, null, "URL mal formada");
+                        respuesta = new ObjetoRespuesta(false, null, "URL mal formada");
                     }
                     break;
 
@@ -305,7 +305,7 @@ public class ServidorHotel extends HttpServlet {
                             respuesta = new ObjetoRespuesta(false, null, "No hay ninguna coincidencia");
                         }
                     } else {
-                        respuesta = new ObjetoRespuesta(true, null, "URL mal formada");
+                        respuesta = new ObjetoRespuesta(false, null, "URL mal formada");
                     }
                     break;
                 case "ModificarReservas/cambiarFentrada":
@@ -328,10 +328,10 @@ public class ServidorHotel extends HttpServlet {
                             respuesta = new ObjetoRespuesta(true, "Fecha de entrada cambiada con exito", "");
 
                         } else {
-                            respuesta = new ObjetoRespuesta(true, null, "No se encuentra el NIF o la fecha de entrada");
+                            respuesta = new ObjetoRespuesta(false, null, "No se encuentra el NIF o la fecha de entrada");
                         }
                     } else {
-                        respuesta = new ObjetoRespuesta(true, null, "URL mal formada");
+                        respuesta = new ObjetoRespuesta(false, null, "URL mal formada");
                     }
                     break;
                 case "ModificarReservas/cambiarFsalida":
@@ -356,10 +356,10 @@ public class ServidorHotel extends HttpServlet {
                             respuesta = new ObjetoRespuesta(true, "Fecha de salida cambiada con exito", "");
 
                         } else {
-                            respuesta = new ObjetoRespuesta(true, null, "No se encuentra el NIF o la fecha de entrada");
+                            respuesta = new ObjetoRespuesta(false, null, "No se encuentra el NIF o la fecha de entrada");
                         }
                     } else {
-                        respuesta = new ObjetoRespuesta(true, null, "URL mal formada");
+                        respuesta = new ObjetoRespuesta(false, null, "URL mal formada");
                     }
                     break;
                 case "ModificarReservas/EliminarReserva":
@@ -382,10 +382,10 @@ public class ServidorHotel extends HttpServlet {
                             respuesta = new ObjetoRespuesta(true, "Reserva eliminada", "");
 
                         } else {
-                            respuesta = new ObjetoRespuesta(true, null, "No se encuentra el NIF o la fecha de entrada");
+                            respuesta = new ObjetoRespuesta(false, null, "No se encuentra el NIF o la fecha de entrada");
                         }
                     } else {
-                        respuesta = new ObjetoRespuesta(true, null, "URL mal formada");
+                        respuesta = new ObjetoRespuesta(false, null, "URL mal formada");
                     }
                     break;
                 case "AddReserva":
@@ -415,7 +415,7 @@ public class ServidorHotel extends HttpServlet {
                                 if (!ComprobarFecha(nif, r.getfEntrada())) {
                                     reservasCliente.get(nif).add(r);
                                 } else {
-                                    respuesta = new ObjetoRespuesta(false, null, "Ya exixste reserva para ese día");
+                                    respuesta = new ObjetoRespuesta(false, null, "Ya existe reserva para ese día");
                                     break;
                                 }
                             } else {
@@ -428,7 +428,7 @@ public class ServidorHotel extends HttpServlet {
                             respuesta = new ObjetoRespuesta(false, null, "No existe un huesped con ese NIF");
                         }
                     } else {
-                        respuesta = new ObjetoRespuesta(true, null, "URL mal formada");
+                        respuesta = new ObjetoRespuesta(false, null, "URL mal formada");
                     }
 
                     break;
