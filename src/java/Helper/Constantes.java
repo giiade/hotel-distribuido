@@ -10,8 +10,7 @@ package Helper;
 import java.text.SimpleDateFormat;
 
 /**
- * This class will have all the constast that we will need in the program
- *
+ *This class will have all the constants that we will need in the program
  * @author JulioLopez
  */
 public class Constantes {
@@ -48,7 +47,9 @@ public class Constantes {
 
     //Constantes para la clase Cliente
     public final static String URL_KEY = "http://localhost:8080/Hotel_SD/hotelApp?operacion=";
-
+    public final static String POST_KEY = "http://localhost:8080/Hotel_SD/hotelApp";
+    
+    
     //Cabecera XML
     public static final String XML_HEADER = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
 
