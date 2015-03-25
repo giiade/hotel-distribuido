@@ -30,7 +30,7 @@ public class Cliente {
     static SimpleDateFormat formatoDeFecha = Constantes.DATE_FORMAT;
     static String entradaMod;
     /**
-     *  Realiza consultas al servidor (¿Está incluida esta entrada?)
+     *  Realiza consultas al servidor
      * @param entrada (GET) 
      * @return devuelve valor cierto si la entrada a consultar se encuentra en el servidor,
      *      falso en caso contrario
@@ -201,6 +201,7 @@ public class Cliente {
                         break;
                     case 2:
                         delHuesped(nif);
+                        opcion=3;
                         break;
                     case 3:
                         break;
@@ -264,6 +265,7 @@ public class Cliente {
                         nif = teclado.nextLine();
                         if (nif.length() > 0) {
                             delHuesped(nif);
+                            opcion=3;
                         } else {
                             System.out.println("Operación de eliminación cancelada");
                         }
@@ -365,12 +367,12 @@ public class Cliente {
         System.out.println("Introduzca todos los datos. Cambie aquellos que desea modificar");
         String nombrehuesped, apellidoshuesped, nacHuesped, dirhuesped, localhuesped, CPhuesped, provinciaHuesped;
         do {
-            System.out.println("  Introduzca el nombre del nuevo huesped");
+            System.out.println("  Introduzca el nombre del huesped");
             nombrehuesped = teclado.nextLine();
         } while (nombrehuesped.length() <= 0);
         nombrehuesped = encode(nombrehuesped);
         do {
-            System.out.println("  Introduzca los apellidos del nuevo huesped");
+            System.out.println("  Introduzca los apellidos del huesped");
             apellidoshuesped = teclado.nextLine();
         } while (apellidoshuesped.length() <= 0);
         apellidoshuesped = encode(apellidoshuesped);
