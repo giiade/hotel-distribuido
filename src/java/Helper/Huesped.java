@@ -219,29 +219,26 @@ public class Huesped {
     @Override
     public String toString() {
         StringBuilder resultado = new StringBuilder();
-        String coma = ", ";
-        String punto= ".";
-        String newline = "\n";
-        resultado.append("Datos del Huesped: ").append(newline);
-        resultado.append("  Nombre: " ).append(this.nombre).append(punto).append(newline);
-        resultado.append("  Apellidos: " ).append(this.apellidos).append(punto).append(newline);
-        resultado.append("  Fecha de nacimiento: ").append(this.nacimiento).append(punto).append(newline);
-        resultado.append("  NIF: ").append(this.nif).append(punto).append(newline);
-        resultado.append("  Dirección: ").append(this.domicilio.get("direccion")).append(coma).append(this.domicilio.get("municipio")).append(coma).append(this.domicilio.get("cp")).append(coma).append(this.domicilio.get("localidad")).append(punto).append(newline);
+        resultado.append("Datos del Huesped: ").append(Constantes.NEWLINE);
+        resultado.append("  Nombre: " ).append(this.nombre).append(Constantes.PUNTO).append(Constantes.NEWLINE);
+        resultado.append("  Apellidos: " ).append(this.apellidos).append(Constantes.PUNTO).append(Constantes.NEWLINE);
+        resultado.append("  Fecha de nacimiento: ").append(this.nacimiento).append(Constantes.PUNTO).append(Constantes.NEWLINE);
+        resultado.append("  NIF: ").append(this.nif).append(Constantes.PUNTO).append(Constantes.NEWLINE);
+        resultado.append("  Dirección: ").append(this.domicilio.get("direccion")).append(Constantes.COMA).append(this.domicilio.get("municipio")).append(Constantes.COMA).append(this.domicilio.get("cp")).append(Constantes.COMA).append(this.domicilio.get("localidad")).append(Constantes.PUNTO).append(Constantes.NEWLINE);
         if (this.fijo != null) {
-            resultado.append("  Fijo: ").append(this.fijo).append(punto).append(newline);
+            resultado.append("  Fijo: ").append(this.fijo).append(Constantes.PUNTO).append(Constantes.NEWLINE);
         } else {
-            resultado.append("  No hay número de fijo registrado").append(newline);
+            resultado.append("  No hay número de fijo registrado").append(Constantes.NEWLINE);
         }
         if (this.movil !=null) {
-            resultado.append("  Móvil: ").append(this.movil).append(punto).append(newline);
+            resultado.append("  Móvil: ").append(this.movil).append(Constantes.PUNTO).append(Constantes.NEWLINE);
         } else {
-            resultado.append("  No hay número de fijo registrado").append(punto).append(newline);
+            resultado.append("  No hay número de fijo registrado").append(Constantes.PUNTO).append(Constantes.NEWLINE);
         }
         if (this.correo != null) {
-            resultado.append("  Correo: ").append(this.correo).append(punto).append(newline);
+            resultado.append("  Correo: ").append(this.correo).append(Constantes.PUNTO).append(Constantes.NEWLINE);
         } else {
-            resultado.append("  No hay dirección de correo electrónico registrada").append(punto).append(newline);
+            resultado.append("  No hay dirección de correo electrónico registrada").append(Constantes.PUNTO).append(Constantes.NEWLINE);
         }
         
 

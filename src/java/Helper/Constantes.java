@@ -16,6 +16,7 @@ import java.text.SimpleDateFormat;
  */
 public class Constantes {
 
+
     public final static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
     public final static SimpleDateFormat DATE_HTMLFORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -38,6 +39,12 @@ public class Constantes {
     public final static String HABITACION_KEY = "habitacion";
     public final static String FENTRADA_KEY = "entrada";
     public final static String FSALIDA_KEY = "salida";
+    
+    //Constantes de uso general
+    public final static String COMA = ", ";
+    public final static String PUNTO= ".";        
+    public final static String NEWLINE= "\n";
+    
 
     //Constantes para la clase Cliente
     public final static String URL_KEY = "http://localhost:8080/Hotel_SD/hotelApp?operacion=";

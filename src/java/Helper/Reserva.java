@@ -108,5 +108,15 @@ public class Reserva {
     public void setfSalida(Date fSalida) {
         this.fSalida = fSalida;
     }
+    @Override
+    public String toString() {
+        StringBuilder resultado = new StringBuilder();
+        resultado.append("Datos de la reserva: ").append(Constantes.NEWLINE);
+        resultado.append("  NIF: ").append(this.NIF).append(Constantes.PUNTO).append(Constantes.NEWLINE);
+        resultado.append("  Habitación: ").append(this.habitacionId).append(Constantes.PUNTO).append(Constantes.NEWLINE);;
+        resultado.append("  Fecha de entrada: ").append(this.fEntrada).append(Constantes.PUNTO).append(Constantes.NEWLINE);
+        resultado.append("  Fecha de salida: ").append(this.fSalida).append(Constantes.PUNTO).append(Constantes.NEWLINE);
+        return resultado.toString();
+    }
 
 }
