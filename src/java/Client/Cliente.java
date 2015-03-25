@@ -30,7 +30,7 @@ public class Cliente {
     static SimpleDateFormat formatoDeFecha = Constantes.DATE_FORMAT;
     static String entradaMod;
     /**
-     *  Realiza consultas al servidor (¿Está incluida esta entradaa?)
+     *  Realiza consultas al servidor (¿Está incluida esta entrada?)
      * @param entrada (GET) 
      * @return devuelve valor cierto si la entrada a consultar se encuentra en el servidor,
      *      falso en caso contrario
@@ -76,7 +76,13 @@ public class Cliente {
         } catch (Exception ex) {
             Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
         }
+        try {
+            System.in.read();
+        } catch (IOException ex) {
+            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return consulta;
+        
     }
     /**
      * Realiza modificaciones(incluidas eliminaciones) a los datos
@@ -107,6 +113,12 @@ public class Cliente {
                 System.out.println(respuestaXML.getError());
             }
         } catch (MalformedURLException ex) {
+            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //Parar ejecucion y facilitar lectura de datos.
+        try {
+            System.in.read();
+        } catch (IOException ex) {
             Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -593,6 +605,7 @@ public class Cliente {
                     break;
                 default:
                     System.out.println("Opción incorrecta. Por favor, seleccione una válida (1-10)");
+                    
             }
         } while (opcion!= 10);
     }
