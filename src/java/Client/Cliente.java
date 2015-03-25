@@ -1,7 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Práctica Hotel_SD para Sistemas distribuidos
+ * @author Manuel Gómez Pérez, Julio López González
+ * 
  */
 package Client;
 
@@ -19,12 +19,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.ArrayList;
 
-/**
- *
- * @author JulioLopez
- */
-public class Cliente {
 
+public class Cliente {
+    // Variables globales
     static XStream xstream = new XStream();
     static String entradaConsulta = null;
     static int opcion;
@@ -32,7 +29,12 @@ public class Cliente {
     static ObjetoRespuesta respuestaXML;
     static SimpleDateFormat formatoDeFecha = Constantes.DATE_FORMAT;
     static String entradaMod;
-
+    /**
+     *  Realiza consultas al servidor (¿Está incluida esta entradaa?)
+     * @param entrada (GET) 
+     * @return devuelve valor cierto si la entrada a consultar se encuentra en el servidor,
+     *      falso en caso contrario
+     */
     private static boolean consulta(String entrada) {
         URL url;
         HttpURLConnection conexion;
@@ -76,7 +78,12 @@ public class Cliente {
         }
         return consulta;
     }
-
+    /**
+     * Realiza modificaciones(incluidas eliminaciones) a los datos
+     * que se encuentran en el servidor
+     * @param entrada (POST)
+     * @throws IOException 
+     */
     private static void modificacion(String entrada) throws IOException {
         URL url;
         HttpURLConnection conexion;
@@ -104,7 +111,11 @@ public class Cliente {
         }
 
     }
-
+    /**
+     * Codifica el texto introducido a UTF-8
+     * @param dato 
+     * @return string con 'dato' en UTF-8
+     */
     private static String encode(String dato) {
         try {
             dato = URLEncoder.encode(dato, "ISO-8859-1");
@@ -113,7 +124,10 @@ public class Cliente {
         }
         return dato;
     }
-
+    /**
+     * Comprueba que la fecha introducida tenga el formato (dd/MM/yyyy)
+     * @return fecha con formato válido 
+     */
     private static String comprobarFecha() {
         String fecha;
         do {
@@ -128,7 +142,11 @@ public class Cliente {
         } while (true);
         return fecha;
     }
-
+    /**
+     * Solicita un NIF para luego llamar al método de consulta de huésped con éste.
+     * @return el resultado de la llamada a consultarHuesped(nif)
+     * @throws IOException 
+     */
     private static boolean consultarHuesped() throws IOException {
         System.out.println("Opción 1. Consultar huésped");
         String nif;
@@ -141,7 +159,15 @@ public class Cliente {
         check = consultarHuesped(nif);
         return check;
     }
-
+    /**
+     * Tras recibir un NIF, realiza una consulta del mismo al servidor, mostrando
+     * resultado. Permite
+     * modificarlo o eliminarlo si lo encuentra.
+     * @param nif (a buscar en el servidor)
+     * @return cierto si el NIF introducido coincide con el de un huésped registrado,
+     *      falso en caso contrario
+     * @throws IOException 
+     */
     private static boolean consultarHuesped(String nif) throws IOException {
 
         boolean check = false;
@@ -174,7 +200,13 @@ public class Cliente {
         }
         return check;
     }
-
+    /**
+     * Recibe un nombre y apellidos. Comprueba si coiciden con el de algún huesped
+     * (mediante una llamada a consulta(entrada).Muestra una lista con las coincidencias.
+     * Permite, tras seleccionar el huésped,
+     * eliminarlo o modificarlo
+     * @throws IOException 
+     */
     private static void consultarHuespedApe() throws IOException {
         boolean check = false;
         System.out.println("Opción 2. Consultar huésped");
@@ -233,7 +265,12 @@ public class Cliente {
             opcion = 0;
         }
     }
-
+    /**
+     * Solicita la introducción de un nif y realiza una llamada a anadirHuesped con
+     * este como parámetro de entrada. Realiza una llamada a consulta(entrada)
+     * con estos datos
+     * @throws IOException 
+     */
     private static void anadirHuesped() throws IOException {
         System.out.println("Opción 3. Añadir huésped");
         String nifhuesped;
@@ -243,9 +280,13 @@ public class Cliente {
         } while (nifhuesped.length() <= 0);
         nifhuesped = encode(nifhuesped);
         anadirHuesped(nifhuesped);
-
     }
-
+    /**
+     * Añade un nuevo huesped, tras introducir todos sus datos obligatorios.
+     * Permite dejar en blanco los opcionales.
+     * @param nifhuesped
+     * @throws IOException 
+     */
     private static void anadirHuesped(String nifhuesped) throws IOException {
 
         String nombrehuesped, apellidoshuesped, nacHuesped, dirhuesped, localhuesped, CPhuesped, provinciaHuesped;
@@ -290,13 +331,23 @@ public class Cliente {
         entradaMod = "operacion=AddHuesped&NIF=" + nifhuesped + "&nombre=" + nombrehuesped + "&apellidos=" + apellidoshuesped + "&direccion=" + dirhuesped + "&localidad=" + localhuesped + "&provincia=" + provinciaHuesped + "&CP=" + CPhuesped + "&nacimiento=" + nacHuesped + "&movil=" + movilHuesped + "&fijo=" + fijoHuesped + "&mail=" + correoHuesped;
         modificacion(entradaMod);
     }
-
+    /**
+     * Solicita la introducción de un NIF. Realiza una llamada a modHuesped con éste como
+     * parámetro de entrada. Realiza una llamada a modificacion(entrada) con estos datos
+     * @throws IOException 
+     */
     private static void modHuesped() throws IOException {
         System.out.println("  Introduzca el NIF del huésped que desea modificar");
         String nif = teclado.nextLine();
         modHuesped(nif);
     }
-
+    /**
+     * Solicita la introducción de todos los datos del huésped. Aquellos que no se deseen modificar
+     * tendrán que ser introducidos tal cual. Realiza varias llamadas a modificacion(entrada)
+     * con éstos datos
+     * @param nif
+     * @throws IOException 
+     */
     private static void modHuesped(String nif) throws IOException {
         System.out.println("     Modificar datos del huésped");
         System.out.println("Introduzca todos los datos. Cambie aquellos que desea modificar");
@@ -356,27 +407,41 @@ public class Cliente {
             modificacion(entradaMod);
         }
     }
-
+    /**
+     * Solicita un NIF al usuario, el cual será usado para llamar a delHuesped(nif)
+     * @throws IOException 
+     */
     private static void delHuesped() throws IOException {
         System.out.println("  Introduzca el NIF del huésped que desea eliminar");
         String nif = teclado.nextLine();
         delHuesped(nif);
     }
-
+    /**
+     * Recibe un nif. Envía una petición de eliminación del huésped con dicho NIF
+     * @param nif
+     * @throws IOException 
+     */
     private static void delHuesped(String nif) throws IOException {
         System.out.println("    Eliminar datos del huésped");
         entradaMod = "operacion=ModificarHuesped/Eliminar&NIF=" + nif;
         modificacion(entradaMod);
-
     }
-
+    /**
+     * Realiza una consulta al servidor con una fecha introducida por el usuario.
+     * Muestra la lista de reservas que tienen dicha fecha como fecha de entrada.
+     */
     private static void buscaReserva() {
         System.out.println("Opción 6. Buscar reservas por fecha de entrada");
         String fecha = comprobarFecha();
         entradaConsulta = ("ConsultarReservas&entrada=" + fecha);
         consulta(entradaConsulta);
     }
-
+    /**
+     * Solicita la introducción del NIF del huésped que ha hecho la reserva así como la fecha de entrada.
+     * Permite modificar la fecha de entrada y de salida de la reserva. Realiza una llamada a
+     * modificacion(entrada)
+     * @throws IOException 
+     */
     private static void modReserva() throws IOException {
         System.out.println("Opción 7. Modificar reserva");
         System.out.println("  Introduzca el NIF del huésped cuya reserva desea modificar");
@@ -400,7 +465,12 @@ public class Cliente {
             } 
         }
     }
-
+    /**
+     * Solicita el NIF del huésped que ha hecho la reserva así como la fecha de entrada.
+     * Realiza una llamada a modificacion(entrada) solicitando la eliminación de la reserva
+     * con esos datos.
+     * @throws IOException 
+     */
     private static void delReserva() throws IOException {
         System.out.println("Opción 8. Eliminar reserva");
         System.out.println("  Introduzca el NIF del huésped cuya reserva desea eliminar");
@@ -413,7 +483,11 @@ public class Cliente {
 
         }
     }
-
+    /**
+     * Permite añadir una reserva mediante la introducción de un NIF, una fecha de entrada y una de salida.
+     * Si el NIF no se encuentra registrado, permite añadir un nuevo huésped con una llamada a anadirHuesped(nif);
+     * @throws IOException 
+     */
     private static void anadirReserva() throws IOException {
         boolean check = false;
         System.out.println("Opción 9. Añadir reserva");
@@ -455,6 +529,12 @@ public class Cliente {
         }
     }
 
+    /**
+     * Menú principal de la aplicación con las distintas llamadas a los módulos que
+     * permiten consultar,añadir,modificar o eliminar huéspedes o reservas.
+     * @param args
+     * @throws IOException 
+     */    
     public static void main(String[] args) throws IOException {
         // TODO code application logic here
         xstream.alias("huesped", Huesped.class);
