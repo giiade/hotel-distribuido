@@ -318,7 +318,7 @@ public class ServletWebApp extends HttpServlet {
                     nParametros = request.getParameterMap().size();
                     if (nParametros >= 2) {
                         String nif = request.getParameter(Constantes.NIF_KEY);
-                        String fOEntrada = request.getParameter("entradaO");
+                        String fOEntrada = request.getParameter(Constantes.FOENTRADA_KEY);
                         String fEntrada = request.getParameter(Constantes.FENTRADA_KEY);
                         String fSalida = request.getParameter(Constantes.FSALIDA_KEY);
                         Date dateO, dateE = null, dateS = null;
@@ -485,7 +485,7 @@ public class ServletWebApp extends HttpServlet {
         }
 
         response.setContentType(
-                "text/html;charset=UTF-8"); //Devolvemos un XML
+                "text/html;charset=UTF-8"); //Devolvemos un HTML
         try (PrintWriter out = response.getWriter()) {
             out.println(Constantes.HTML_HEADER);
             out.println(htmlRes);
@@ -614,6 +614,11 @@ public class ServletWebApp extends HttpServlet {
         return reserva;
     }
 
+    /**
+     * Método para devolver un String que contendrá el formato HTML aplicado a lo que reciba como entrada
+     * @param h Un huesped
+     * @return String con formato HTML que contendrá toda la información de Huesped.
+     */
     private String printToHtml(Huesped h) {
 
         String nacimiento = Constantes.DATE_FORMAT.format(h.getNacimiento());
@@ -642,6 +647,11 @@ public class ServletWebApp extends HttpServlet {
 
     }
 
+    /**
+     * Método para devolver un String que contendrá el formato HTML aplicado a lo que reciba como entrada
+     * @param listaH Lista de huéspedes
+     * @return String con formato HTML que contendrá la lista de huéspedes.
+     */
     private String printToHtml(ArrayList<Huesped> listaH) {
         StringBuilder html = new StringBuilder();
         String salto = "\n";
@@ -694,6 +704,11 @@ public class ServletWebApp extends HttpServlet {
         return html.toString();
     }
 
+    /**
+     * Método para devolver un String que contendrá el formato HTML aplicado a lo que reciba como entrada
+     * @param listaR Lista de reservas
+     * @return  String con formato HTML para imprimir la lista de reservas recibida
+     */
     private String prinToHtml(ArrayList<Reserva> listaR) {
         StringBuilder html = new StringBuilder();
         String salto = "\n";
@@ -736,6 +751,12 @@ public class ServletWebApp extends HttpServlet {
         return html.toString();
     }
 
+    /**
+     * Método para devolver un String que contendrá el formato HTML aplicado a lo que reciba como entrada
+     * @param s String mensaje 
+     * @param success Si la consulta es válida true, si es inválida false.
+     * @return  String con formato HTML con el mensaje recibido.
+     */
     private String prinToHtml(String s, boolean success) {
         String salto = "\n";
         String P = "<p class=\"text-center\">";

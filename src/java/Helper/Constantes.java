@@ -37,6 +37,7 @@ public class Constantes {
     public final static String HUESPED_KEY = "huesped";
     public final static String HABITACION_KEY = "habitacion";
     public final static String FENTRADA_KEY = "entrada";
+    public final static String FOENTRADA_KEY = "entradaO";
     public final static String FSALIDA_KEY = "salida";
     
     //Constantes de uso general

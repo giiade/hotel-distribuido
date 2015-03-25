@@ -313,22 +313,25 @@ public class ServidorHotel extends HttpServlet {
                     if (nParametros >= 2) {
                         String nif = request.getParameter(Constantes.NIF_KEY);
                         String fEntrada = request.getParameter(Constantes.FENTRADA_KEY);
-                        String nuevaEntrada = request.getParameter("newEntrada");
-                        Date date,date2;
+                        String fOEntrada = request.getParameter(Constantes.FOENTRADA_KEY);
+                        Date dateO, dateE;
                         try {
-                            date = Constantes.DATE_FORMAT.parse(fEntrada);
-                            date2 = Constantes.DATE_FORMAT.parse(nuevaEntrada);
+                            dateO = Constantes.DATE_FORMAT.parse(fOEntrada);
+                            dateE = Constantes.DATE_FORMAT.parse(fEntrada);
                         } catch (ParseException ex) {
                             respuesta = new ObjetoRespuesta(false, null, "Error al convertir fecha \"dd/MM/YYY\"");
                             break;
                             //salimos para enviar el mensaje de fallo.
                         }
 
-                        Reserva r = getReserva(nif, date);
+                        Reserva r = getReserva(nif, dateO);
                         if (r != null) {
-                            r.setfEntrada(date2);
+                            if(dateE.before(r.getfSalida())){
+                            r.setfEntrada(dateE);
                             respuesta = new ObjetoRespuesta(true, "Fecha de entrada cambiada con exito", "");
-
+                            }else{
+                                respuesta = new ObjetoRespuesta(false, null, "Fecha de entrada no puede ser después de fecha de salida");
+                            }
                         } else {
                             respuesta = new ObjetoRespuesta(false, null, "No se encuentra el NIF o la fecha de entrada");
                         }
@@ -340,11 +343,11 @@ public class ServidorHotel extends HttpServlet {
                     nParametros = request.getParameterMap().size();
                     if (nParametros >= 2) {
                         String nif = request.getParameter(Constantes.NIF_KEY);
-                        String fEntrada = request.getParameter(Constantes.FENTRADA_KEY);
+                        String fOEntrada = request.getParameter(Constantes.FOENTRADA_KEY);
                         String fSalida = request.getParameter(Constantes.FSALIDA_KEY);
-                        Date dateE, dateS;
+                        Date dateO, dateS;
                         try {
-                            dateE = Constantes.DATE_FORMAT.parse(fEntrada);
+                            dateO = Constantes.DATE_FORMAT.parse(fOEntrada);
                             dateS = Constantes.DATE_FORMAT.parse(fSalida);
                         } catch (ParseException ex) {
                             respuesta = new ObjetoRespuesta(false, null, "Error al convertir fecha \"dd/MM/YYY\"");
@@ -352,10 +355,14 @@ public class ServidorHotel extends HttpServlet {
                             //Salimos para enviar el mensaje de fallo.
                         }
 
-                        Reserva r = getReserva(nif, dateE);
+                        Reserva r = getReserva(nif, dateO);
                         if (r != null) {
+                            if(dateS.after(dateO)){
                             r.setfSalida(dateS);
                             respuesta = new ObjetoRespuesta(true, "Fecha de salida cambiada con exito", "");
+                            }else{
+                                respuesta = new ObjetoRespuesta(false, null, "La fecha de salida no puede ser antes que la de entrada");
+                            }
 
                         } else {
                             respuesta = new ObjetoRespuesta(false, null, "No se encuentra el NIF o la fecha de entrada");
