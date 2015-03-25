@@ -233,7 +233,7 @@ public class Huesped {
         resultado.append("  Apellidos: " ).append(this.apellidos).append(Constantes.PUNTO).append(Constantes.NEWLINE);
         resultado.append("  Fecha de nacimiento: ").append(this.nacimiento).append(Constantes.PUNTO).append(Constantes.NEWLINE);
         resultado.append("  NIF: ").append(this.nif).append(Constantes.PUNTO).append(Constantes.NEWLINE);
-        resultado.append("  Dirección: ").append(this.domicilio.get("direccion")).append(Constantes.COMA).append(this.domicilio.get("municipio")).append(Constantes.COMA).append(this.domicilio.get("cp")).append(Constantes.COMA).append(this.domicilio.get("localidad")).append(Constantes.PUNTO).append(Constantes.NEWLINE);
+        resultado.append("  Dirección: ").append(this.domicilio.get(Constantes.ADDRESS_KEY)).append(Constantes.COMA).append(this.domicilio.get(Constantes.LOCALIDAD_KEY)).append(Constantes.COMA).append(this.domicilio.get(Constantes.CP_KEY)).append(Constantes.COMA).append(this.domicilio.get(Constantes.PROVINCIA_KEY)).append(Constantes.PUNTO).append(Constantes.NEWLINE);
         if (this.fijo != null) {
             resultado.append("  Fijo: ").append(this.fijo).append(Constantes.PUNTO).append(Constantes.NEWLINE);
         } else {

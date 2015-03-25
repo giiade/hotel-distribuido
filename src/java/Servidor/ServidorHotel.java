@@ -313,9 +313,11 @@ public class ServidorHotel extends HttpServlet {
                     if (nParametros >= 2) {
                         String nif = request.getParameter(Constantes.NIF_KEY);
                         String fEntrada = request.getParameter(Constantes.FENTRADA_KEY);
-                        Date date;
+                        String nuevaEntrada = request.getParameter("newEntrada");
+                        Date date,date2;
                         try {
                             date = Constantes.DATE_FORMAT.parse(fEntrada);
+                            date2 = Constantes.DATE_FORMAT.parse(nuevaEntrada);
                         } catch (ParseException ex) {
                             respuesta = new ObjetoRespuesta(false, null, "Error al convertir fecha \"dd/MM/YYY\"");
                             break;
@@ -324,7 +326,7 @@ public class ServidorHotel extends HttpServlet {
 
                         Reserva r = getReserva(nif, date);
                         if (r != null) {
-                            r.setfEntrada(date);
+                            r.setfEntrada(date2);
                             respuesta = new ObjetoRespuesta(true, "Fecha de entrada cambiada con exito", "");
 
                         } else {

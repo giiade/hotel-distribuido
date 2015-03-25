@@ -126,7 +126,6 @@ public class Cliente {
                 System.out.println("            Error al introducir fecha,inténtelo de nuevo");
             }
         } while (true);
-        System.out.println(formatoDeFecha);
         return fecha;
     }
 
@@ -154,7 +153,7 @@ public class Cliente {
                 System.out.println("¿Qué desea hacer?");
                 System.out.println("    1 - Modificar Huésped");
                 System.out.println("    2 - Eliminar Huésped");
-                System.out.println("    3 - Volver al menú principal ");
+                System.out.println("    3 - Volver al menú anterior ");
                 System.out.println();
                 System.out.println("Seleccione el número de la opción deseada");
                 opcion = Integer.parseInt(teclado.nextLine());
@@ -200,7 +199,7 @@ public class Cliente {
                 System.out.println("¿Qué desea hacer?");
                 System.out.println("    1 - Modificar Huésped");
                 System.out.println("    2 - Eliminar Huésped");
-                System.out.println("    3 - Volver al menú principal ");
+                System.out.println("    3 - Volver al menú anterior ");
                 System.out.println();
                 System.out.println("Seleccione el número de la opción deseada");
                 opcion = Integer.parseInt(teclado.nextLine());
@@ -299,51 +298,61 @@ public class Cliente {
     }
 
     private static void modHuesped(String nif) throws IOException {
-        System.out.println("Opción 1. Modificar datos del huésped");
-        System.out.println("Introduzca sólo los datos que desea modificar.Para aquellos que no desee modificar pulse intro sin introducir texto.");
+        System.out.println("     Modificar datos del huésped");
+        System.out.println("Introduzca todos los datos. Cambie aquellos que desea modificar");
         String nombrehuesped, apellidoshuesped, nacHuesped, dirhuesped, localhuesped, CPhuesped, provinciaHuesped;
-        System.out.println("  Introduzca el nombre modificado");
-        nombrehuesped = teclado.nextLine();
+        do {
+            System.out.println("  Introduzca el nombre del nuevo huesped");
+            nombrehuesped = teclado.nextLine();
+        } while (nombrehuesped.length() <= 0);
         nombrehuesped = encode(nombrehuesped);
-        System.out.println("  Introduzca los apellidos modificados");
-        apellidoshuesped = teclado.nextLine();
+        do {
+            System.out.println("  Introduzca los apellidos del nuevo huesped");
+            apellidoshuesped = teclado.nextLine();
+        } while (apellidoshuesped.length() <= 0);
         apellidoshuesped = encode(apellidoshuesped);
-        System.out.println("  Introduzca la fecha de nacimiento modificada (formato dd/mm/yyyy)");
-        nacHuesped = teclado.nextLine();
-        nacHuesped = encode(nacHuesped);
+        System.out.println("  Fecha de nacimiento:");
+        nacHuesped = comprobarFecha();
         System.out.println("Domicilio del huesped");
-        System.out.println("  1-dirección modificada");
-        dirhuesped = teclado.nextLine();
+        do {
+            System.out.println("  1-dirección");
+            dirhuesped = teclado.nextLine();
+        } while (dirhuesped.length() <= 0);
         dirhuesped = encode(dirhuesped);
-        System.out.println("  2-Localidad modificada");
-        localhuesped = teclado.nextLine();
-        localhuesped = encode(localhuesped);
-        System.out.println("  3-CP modificado");
-        CPhuesped = teclado.nextLine();
+        do {
+            System.out.println("  2-Localidad");
+            localhuesped = teclado.nextLine();
+        } while (localhuesped.length() <= 0);
+        do {
+            System.out.println("  3-CP");
+            CPhuesped = teclado.nextLine();
+        } while (CPhuesped.length() <= 0);
         CPhuesped = encode(CPhuesped);
-        System.out.println("  4-Provincia modificada");
-        provinciaHuesped = teclado.nextLine();
+        do {
+            System.out.println("  4-Provincia");
+            provinciaHuesped = teclado.nextLine();
+        } while (provinciaHuesped.length() <= 0);
         provinciaHuesped = encode(provinciaHuesped);
-        System.out.println("Introduzca teléfono fijo modificado");
+        System.out.println("Introduzca teléfono fijo");
         String fijoHuesped = teclado.nextLine();
-        fijoHuesped = encode(fijoHuesped);
-        System.out.println("Introduzca el número de móvil modificado");
+        System.out.println("Introduzca el número de móvil)");
         String movilHuesped = teclado.nextLine();
-        movilHuesped = encode(movilHuesped);
-        System.out.println("Introduzca el correo electrónico modificado");
+        System.out.println("Introduzca el correo electrónico");
         String correoHuesped = teclado.nextLine();
-        correoHuesped = encode(correoHuesped);
         if (nombrehuesped.length() > 0 || apellidoshuesped.length() > 0) {
-            entradaMod = "operacion=ModificarHuesped/CambiarNombre&nombre=" + nombrehuesped + "&apellidos=" + apellidoshuesped;
+            entradaMod = "operacion=ModificarHuesped/CambiarNombre&nombre=" + nombrehuesped + "&apellidos=" + apellidoshuesped+"&NIF="+nif;
             modificacion(entradaMod);
-        } else if (dirhuesped.length() > 0 || CPhuesped.length() > 0 || localhuesped.length() > 0 || provinciaHuesped.length() > 0) {
-            entradaMod = "operacion=ModificarHuesped/CambiarDomicilio&direccion=" + dirhuesped + "&localidad=" + localhuesped + "&provincia=" + provinciaHuesped + "&CP=" + CPhuesped;
+        }
+        if(dirhuesped.length() > 0 || CPhuesped.length() > 0 || localhuesped.length() > 0 || provinciaHuesped.length() > 0) {
+            entradaMod = "operacion=ModificarHuesped/CambiarDomicilio&direccion=" + dirhuesped + "&localidad=" + localhuesped + "&provincia=" + provinciaHuesped + "&CP=" + CPhuesped+"&NIF="+nif;
             modificacion(entradaMod);
-        } else if (nacHuesped.length() > 0) {
-            entradaMod = "operacion=ModificarHuesped/CambiarNacimiento&nacimiento=" + nacHuesped;
+        }
+        if (nacHuesped.length() > 0) {
+            entradaMod = "operacion=ModificarHuesped/CambiarNacimiento&nacimiento=" + nacHuesped+"&NIF="+nif;
             modificacion(entradaMod);
-        } else if (movilHuesped.length() > 0 || fijoHuesped.length() > 0 || correoHuesped.length() > 0) {
-            entradaMod = "operacion=ModificarHuesped/CambiarOpcional&movil=" + movilHuesped + "&fijo=" + fijoHuesped + "&mail=" + correoHuesped;
+        }
+        if (movilHuesped.length() > 0 || fijoHuesped.length() > 0 || correoHuesped.length() > 0) {
+            entradaMod = "operacion=ModificarHuesped/CambiarOpcional&movil=" + movilHuesped + "&fijo=" + fijoHuesped + "&mail=" + correoHuesped+"&NIF="+nif;
             modificacion(entradaMod);
         }
     }
@@ -355,7 +364,7 @@ public class Cliente {
     }
 
     private static void delHuesped(String nif) throws IOException {
-        System.out.println("Opción 2. Eliminar datos del huésped");
+        System.out.println("    Eliminar datos del huésped");
         entradaMod = "operacion=ModificarHuesped/Eliminar&NIF=" + nif;
         modificacion(entradaMod);
 
@@ -373,16 +382,19 @@ public class Cliente {
         System.out.println("  Introduzca el NIF del huésped cuya reserva desea modificar");
         String nif = teclado.nextLine();
         if (nif.length() > 0) {
+            System.out.println("  Introduzca la fecha de entrada original");
+            String fechaEntradaOrig = teclado.nextLine();
             System.out.println("  Introduzca sólo los datos que desea modificar.Para aquellos que no desee modificar pulse intro sin introducir texto.");
             System.out.println("  Introduzca la fecha de entrada modificada");
             String fechaEntrada = teclado.nextLine();
             System.out.println("  Introduzca la fecha de salida modificada");
             String fechaSalida = teclado.nextLine();
             if (fechaEntrada.length() > 0) {
-                entradaMod = "operacion=ModificarReservas/cambiarFentrada&entrada=" + fechaEntrada + "&nif=" + nif;
+                entradaMod = "operacion=ModificarReservas/cambiarFentrada&entrada=" + fechaEntradaOrig + "&NIF=" + nif+"&newEntrada="+fechaEntrada;
                 modificacion(entradaMod);
-            } else if (fechaSalida.length() > 0) {
-                entradaMod = "operacion=ModificarReservas/cambiarFsalida&salida=" + fechaSalida + "&nif=" + nif;
+            } 
+            if (fechaSalida.length() > 0) {
+                entradaMod = "operacion=ModificarReservas/cambiarFsalida&salida=" + fechaSalida +"&entrada"+fechaEntradaOrig+ "&NIF=" + nif;
                 modificacion(entradaMod);
             }
         }
@@ -395,7 +407,7 @@ public class Cliente {
         if (nif.length() > 0) {
             System.out.println("  Fecha de entrada de la reserva a eliminar");
             String fechaEntrada = comprobarFecha();
-            entradaMod = "operacion=ModificarReservas/EliminarReserva&entrada=" + fechaEntrada + "&nif=" + nif;
+            entradaMod = "operacion=ModificarReservas/EliminarReserva&entrada=" + fechaEntrada + "&NIF=" + nif;
             modificacion(entradaMod);
 
         }
@@ -406,6 +418,7 @@ public class Cliente {
         System.out.println("Opción 9. Añadir reserva");
         System.out.println("  Introduzca el NIF del huésped a cuyo nombre estará la reserva");
         String nif = teclado.nextLine();
+        nif = encode(nif);
         System.out.println("  Fecha de entrada:");
         String fEntrada = comprobarFecha();
         System.out.println("  Fecha de Salida");
@@ -415,24 +428,28 @@ public class Cliente {
         if (!check) {
             do {
                 System.out.println("El huésped no se encuentra en la base de datos. ¿Qué desea?");
-                System.out.println("    1- Añadir huésped");
-                System.out.println("    2-Volver al menu principal");
+                System.out.println("    1- Añadir huésped y crear reserva");
+                System.out.println("    2-Volver al menu anterior");
                 System.out.println("Seleccione la opción deseada");
                 opcion = Integer.parseInt(teclado.nextLine());
                 switch (opcion) {
                     case 1:
                         anadirHuesped(nif);
                         System.out.println("Se procederá a crear la reserva con el huésped añadido");
+                        entradaMod = "operacion=AddReserva&entrada=" + fEntrada + "&NIF=" + nif + "&salida=" + fSalida;
+                        modificacion(entradaMod);
+                        opcion=2;
                         break;
                     case 2:
                         break;
                     default:
                         System.out.println("Opción incorrecta. Por favor, seleccione una válida (1-2)");
                 }
-            } while ((opcion != 2) || (opcion != 1));
+            } while (opcion != 2);
         }
-        if (opcion != 2) {
-            entradaMod = "operacion=AddReserva&entrada=" + fEntrada + "&nif=" + nif + "&salida=" + fSalida;
+        else{
+            System.out.println("Se procederá a crear la reserva.");
+            entradaMod = "operacion=AddReserva&entrada=" + fEntrada + "&NIF=" + nif + "&salida=" + fSalida;
             modificacion(entradaMod);
         }
     }
@@ -444,7 +461,7 @@ public class Cliente {
         xstream.alias("Respuesta", ObjetoRespuesta.class);
 
         do {
-            System.out.println("MENÚ CUTRE DE JULIO");
+            System.out.println("MENÚ CLIENTE");
             System.out.println("    1 - Consultar Huésped (NIF)");
             System.out.println("    2 - Consultar Huésped (Apellidos y nombre)");
             System.out.println("    3 - Añadir Huesped ");
@@ -491,7 +508,7 @@ public class Cliente {
                     break;
                 case 10:
                     System.out.println("Opción 10. Salir");
-                    System.out.println("    Gracias por usar el cutre menú julio para reservas de hotel.");
+                    System.out.println("    Gracias por usar el nuestro menú para reservas de hotel.");
                     break;
                 default:
                     System.out.println("Opción incorrecta. Por favor, seleccione una válida (1-10)");
